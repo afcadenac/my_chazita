@@ -1,29 +1,58 @@
 import { Navigate, Route, Routes } from "react-router-dom"
 import { LoginPage, RegisterPage } from "../auth";
-import { ChazasPage, Navbar } from "../chazas";
+import { AnnouncementPage, ChazasPage, HomePage, InventoryPage, Navbar, UsersPage } from "../chazas";
+import { useAuthStore } from "../hook";
+import { useEffect } from "react";
 
 
 
 export const AppRouter = () => {
 
-    const authStatus = 'authenticated';
+  const {status,checkToken,user}=useAuthStore();
 
+  useEffect(() => {
+    checkToken();
+  }, []);
+  
+  if(status==="checking"){
+    return (
+      <h2>Cargando...</h2>
+    )
+  }
 
   return (
-    <>
-    {/* <Navbar/> */}
-      <Routes>
-          {
-              (authStatus === 'authenticateds')  
-              ? <Route path="/auth/*" element={ <ChazasPage/> } />
-              : <Route path="/login" element={ <LoginPage/> } />
-            }
+    <Routes>
 
-          <Route path="/register" element={ <RegisterPage/> } />
-          {/* <Route path="/*" element={ <Navigate to="/" /> } /> */}
-          {/* <Route path="/*" element={ alert("La pagina no existe") } /> */}
-      </Routes>
-    </>
-    
+      {
+        (status==="not-authenticated")
+        ?(
+          <>
+            <Route path="/auth/register" element={ <RegisterPage/> } />
+            <Route path="/auth/login" element={ <LoginPage/> } />
+          </>
+        )
+        :(
+          <Route path="/auth/*" element={ <Navigate to="/chazas"/> } />
+        )
+      }
+
+      {
+        (user.type==="Administrador")
+        ?<Route path="/users" element={<UsersPage/>}/>
+        :""
+      }
+
+      {
+        (user.type==="Dueño")
+        ?<Route path="/inventory" element={<InventoryPage/>}/>
+        :""
+      }
+      
+      <Route path="/" element={ <HomePage/> } />
+      <Route path="/chazas" element={ <ChazasPage/> } />
+      <Route path="/announcement" element={ <AnnouncementPage/> } />
+      <Route path="/*" element={ <Navigate to="/"/> } />
+
+    </Routes>
   )
 }
