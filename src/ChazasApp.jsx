@@ -8,8 +8,6 @@ export const ChazasApp = () => {
     <BrowserRouter>
       <Navbar/>
       <AppRouter/>
-       
-
     </BrowserRouter>
   )
 }
