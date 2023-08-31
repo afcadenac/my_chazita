@@ -1,6 +1,7 @@
 import Modal from "react-modal"
 import { useForm, useUiStore } from "../../hook";
 import { useEffect } from "react";
+import { convertToVector } from "../../helpers";
 
 const customStyles = {
     content: {
@@ -19,18 +20,6 @@ export const ModalForm = ({make}) => {
     const {isModalOpen,closeModal,currentValue,ChangeValue}=useUiStore();
     const {formState,onInputChange,setFormState}=useForm(currentValue);
 
-    const convertToVector=()=>{
-        let vector=[];
-
-        for (const valueKey of Object.keys(currentValue)) {
-            if(valueKey==="_id" || valueKey==="chaza") continue
-            vector.push({
-                name:valueKey,
-                value:currentValue[valueKey]
-            });
-        }
-        return vector;
-    }
     
     useEffect(() => {
       setFormState(currentValue);
@@ -54,7 +43,7 @@ export const ModalForm = ({make}) => {
         <hr />
         <form onSubmit={onSubmitForm} className="container">
             {
-                convertToVector().map((i)=>(
+                convertToVector(currentValue).map((i)=>(
                     <div key={i.name} className="form-group mb-2"> 
                   
                         <input className="form-control" type="text" name={i.name} value={formState[i.name] || ""} onChange={onInputChange} placeholder={i.name}></input>

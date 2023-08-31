@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux"
 import { onChecking, onLogin, onLogout } from "../store";
 import chazaApi from "../api/ChazaApi";
+import Swal from "sweetalert2";
 
 
 export const useAuthStore = () => {
@@ -15,9 +16,9 @@ export const useAuthStore = () => {
 
             localStorage.setItem("token",data.token);
 
-            dispatch(onLogin({name:data.name,uid:data.uid,type:data.type}));
+            dispatch(onLogin({name:data.name,uid:data.uid,type:data.type,chaza:data.chaza}));
         } catch (error) {
-            console.log(error);
+            Swal.fire("Error al iniciar sesion",error.response.data.msg || "datos invalidos","error");
             dispatch(onLogout("error xd"));
         }
     }
@@ -30,12 +31,15 @@ export const useAuthStore = () => {
 
             localStorage.setItem("token",data.token);
 
-            dispatch(onLogin({name:data.name,uid:data.uid,type:data.type}));
+            dispatch(onLogin({name:data.name,uid:data.uid,type:data.type,chaza:data.chaza}));
         } catch (error) {
             console.log(error);
+            
+            Swal.fire("Error al registrarse" , error.response.data.msg || "datos invalidos","error")
             dispatch(onLogout("error xd"));
         }
     }
+    
 
     const startLogout=()=>{
         dispatch(onChecking());
@@ -46,15 +50,19 @@ export const useAuthStore = () => {
 
     const checkToken=async()=>{
         dispatch(onChecking());
+        if(!localStorage.getItem("token")){
+            dispatch(onLogout());
+            return;
+        }
         try {
             const {data}=await chazaApi.get("/auth/token");
-            console.log(data);
+            //console.log(data);
 
             localStorage.setItem("token",data.token);
-            dispatch(onLogin({name:data.name,uid:data.uid,type:data.type}));
+            dispatch(onLogin({name:data.name, uid:data.uid, type:data.type, chaza:data.chaza}));
         } catch (error) {
-            console.log(error);
             localStorage.clear();
+            Swal.fire("cerrando sesion",error.response.data.msg || "datos invalidos","error");
             dispatch(onLogout("error en el token"));
         }
     }

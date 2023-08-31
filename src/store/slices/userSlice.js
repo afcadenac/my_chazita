@@ -3,11 +3,13 @@ import { createSlice } from '@reduxjs/toolkit'
 export const userSlice = createSlice({
     name: 'user',
     initialState:{
-        users: [''],
+        users: [],
+        //isLoadingUsers:true
     },
     reducers: {
         onLoadUsers: (state,{payload}) => {
             state.users = payload
+            //state.isLoadingUsers=false
         },
         onUpdateUser:(state,{payload})=>{
             state.users=state.users.map((user)=>{
@@ -17,9 +19,12 @@ export const userSlice = createSlice({
                     return user;
                 }
             })
+        },
+        onDeleteUser:(state, {payload})=>{
+            state.users=state.users.filter((user)=>user._id!==payload);
         }
     },
 })
 
 // Action creators are generated for each case reducer function
-export const { onLoadUsers,onUpdateUser } = userSlice.actions
+export const { onLoadUsers,onUpdateUser,onDeleteUser } = userSlice.actions

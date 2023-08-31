@@ -3,13 +3,17 @@ import { useUiStore, useUserStore } from "../../hook";
 
 export const UsersTable = () => {
 
-    const {users,startUpdateUser}=useUserStore();
+    const {users,startUpdateUser,startDeleteUser}=useUserStore();
     
     const {openModal,ChangeValue}=useUiStore();
 
     const onUpdate=(user)=>{
         ChangeValue(user);
         openModal();
+    }
+
+    const onDelete=(id)=>{
+        startDeleteUser(id);
     }
 
   return (
@@ -30,15 +34,15 @@ export const UsersTable = () => {
                 {
                     users.map((user)=>
                     (
-                    <tr key={user?._id || ""}>  
+                    <tr key={user._id}>  
                         <th scope="row">{user._id}</th>
                         <td>{user.name}</td>
                         <td>{user.email}</td>
                         <td>{user?.phone || "no tiene"}</td>
                         <td>{user.type}</td>
                         <td>
-                            <button className="btn btn-primary m-1" onClick={()=>onUpdate(user)}>Actualizar</button>
-                            <button className="btn btn-danger m-1">Eliminar</button>
+                            <button className="btn btn-primary m-1" onClick={()=>onUpdate({...user,phone:"no tiene"})}>Actualizar</button>
+                            <button className="btn btn-danger m-1" onClick={()=>onDelete(user._id)}>Eliminar</button>
                         </td>
                     </tr>
                     ))

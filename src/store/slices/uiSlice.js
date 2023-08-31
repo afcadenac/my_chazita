@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, current } from '@reduxjs/toolkit'
 
 export const uiSlice = createSlice({
     name: 'ui',
@@ -12,6 +12,7 @@ export const uiSlice = createSlice({
         },
         onCloseModal: (state) => {
             state.isModalOpen=false;
+            state.currentValue={};
         },
         onChangeValue: (state,{payload}) => {
             state.currentValue=payload;

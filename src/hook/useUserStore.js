@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import chazaApi from "../api/ChazaApi";
-import { onLoadUsers, onUpdateUser } from "../store";
+import { onCloseModal, onDeleteUser, onLoadUsers, onUpdateUser } from "../store";
 
 
 export const useUserStore = () => {
@@ -10,7 +10,6 @@ export const useUserStore = () => {
     const startLoadUser=async()=>{
         try {
             const {data}=await chazaApi.get("/user");
-            console.log(data.users)
             dispatch(onLoadUsers(data.users));
             
         } catch (error) {
@@ -21,11 +20,22 @@ export const useUserStore = () => {
     const startUpdateUser=async(user)=>{
         try {
             const {data}=await chazaApi.put("/user/"+user._id.toString(),user);
-            console.log(data)
-            dispatch(onUpdateUser(user));
+            console.log(data);
+            dispatch(onUpdateUser(data.userUpdated));
+            dispatch(onCloseModal());
             
         } catch (error) {
             console.log(error)
+        }
+    }
+
+    const startDeleteUser=async(id)=>{
+        try {
+            const {data}=await chazaApi.delete(`/user/${id}`);
+            console.log(data);
+            dispatch(onDeleteUser(data.userDeleted._id));
+        } catch (error) {
+            console.log(error);
         }
     }
 
@@ -33,6 +43,7 @@ export const useUserStore = () => {
         users,
 
         startLoadUser,
-        startUpdateUser
+        startUpdateUser,
+        startDeleteUser
     }
 }

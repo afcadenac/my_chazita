@@ -1,8 +1,25 @@
-import { Navbar } from "../"
-import { ChazaFilter, ChazaResult } from "../components"
+import { useEffect } from "react";
+import { ChazaFilter, ChazaModal, ChazaResult } from "../components"
+import { useAuthStore, useChazaStore, useUserStore } from "../../hook";
 
 
 export const ChazasPage = () => {
+
+  const {startLoadUser}=useUserStore(); 
+
+  const {startLoadingChazas}=useChazaStore();
+
+  const {user}=useAuthStore();
+
+  useEffect(() => {
+    if(user.type==="Administrador"){
+      startLoadUser();
+    }
+  }, []);
+
+  useEffect(() => {
+    startLoadingChazas();
+  }, []);
   return (
     <>
       <div className='container text-center' >
@@ -10,6 +27,7 @@ export const ChazasPage = () => {
           <ChazaFilter/>
           <ChazaResult/>
         </div>
+        <ChazaModal/>
       </div>
     </>
   )

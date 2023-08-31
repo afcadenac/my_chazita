@@ -1,3 +1,4 @@
+import Swal from 'sweetalert2';
 import { useAuthStore } from '../../hook';
 import { useForm } from '../../hook/useForm';
 import './LoginPage.css';
@@ -16,7 +17,7 @@ export const RegisterPage = () => {
     const onSubmitRegister=(event)=>{
         event.preventDefault();
         if(password!==confirmPassword){
-            alert("error en la contraseña");
+            Swal.fire("Error en creacion de usuario","La constraseñas deben ser iguales","error");
             return;
         }
 
