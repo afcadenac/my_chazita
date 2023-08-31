@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import chazita from '../../assets/images/choza.jpg'
 import { useAuthStore, useChazaStore } from '../../hook'
+import '../../styles.css';
 
 export const ChazaCard = ({chaza={}}) => {
     const {user}=useAuthStore();
@@ -16,7 +17,7 @@ export const ChazaCard = ({chaza={}}) => {
     }
 
   return (
-    <div className="row bg-success m-2 p-2 border border-black" onClick={()=>{startLoadCurrentChaza(chaza)}} onDoubleClick={()=>onNavigateChaza(chaza._id)}>
+    <div className="row bg-success m-2 p-2 border border-black espace-pointer" onClick={()=>{startLoadCurrentChaza(chaza)}} onDoubleClick={()=>onNavigateChaza(chaza._id)}>
         <div className='col-sm-2'>
             <img src={chazita} alt="chaza" className="card-img border border-black"/>
         </div>

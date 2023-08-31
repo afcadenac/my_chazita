@@ -1,5 +1,6 @@
 import producto from '../../assets/images/producto.jpg'
 import { useAuthStore, useChazaStore, useProductStore, useUiStore } from '../../hook'
+import '../../styles.css';
 
 export const ProductCard = ({list={}}) => {
 
@@ -9,7 +10,7 @@ export const ProductCard = ({list={}}) => {
   const {startDeleteProduct}=useProductStore();
 
   return (
-    <div className="col-md-6 bg-success d-flex border border-black p-2" onClick={()=>ChangeValue(list)} onDoubleClick={openModal}>
+    <div className="col-md-6 bg-success d-flex border border-black p-2 espace-pointer" onClick={()=>ChangeValue(list)} onDoubleClick={openModal}>
         <div className="col-md-8 d-flex align-items-center flex-column">
             <h4>{list.name}</h4>
             <div className='row mt-2 mb-2'>
