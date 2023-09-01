@@ -3,6 +3,7 @@ import { onDeleteProduct, onLoadProducts, onNewProduct, onUpdateProduct } from "
 import chazaApi from "../api/ChazaApi";
 import { useUserStore } from "./useUserStore";
 import { useAuthStore } from "./useAuthStore";
+import { getFilteredProducts } from "../helpers";
 
 
 export const useProductStore = () => {
@@ -59,6 +60,19 @@ export const useProductStore = () => {
         dispatch(onLoadProducts(value));
     }
 
+    const startFilterProduct=async(filter,id_chaza)=>{
+        try {
+            const {data}=await chazaApi.post("/product/getProducts",{chaza:id_chaza});
+            let productFilter=data.product;
+
+            productFilter=getFilteredProducts(filter,productFilter);
+
+            dispatch(onLoadProducts(productFilter));
+        } catch (error) {
+            console.log();
+        }
+    }
+
     // const startLoadingChazasId=async(id)=>{
     //     try {
     //         const {data}=await chazaApi.get("/chaza/"+id);
@@ -80,6 +94,7 @@ export const useProductStore = () => {
         startDeleteProduct,
         startNewProduct,
         startUpdateProduct,
+        startFilterProduct,
 
         startCloseProduct
     }

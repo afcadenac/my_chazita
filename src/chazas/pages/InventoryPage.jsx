@@ -8,7 +8,7 @@ export const InventoryPage = () => {
   const {id}=useParams();
   const {startLoadingChazasId,currentChaza,startLoadCurrentChaza}=useChazaStore();
   const {user}=useAuthStore();
-  const {products,startLoadingProducts,startCloseProduct}=useProductStore();
+  const {products,startLoadingProducts,startCloseProduct,startFilterProduct}=useProductStore();
 
   if((user.chaza===undefined || user.chaza===null) && id===undefined){
     return (
@@ -28,12 +28,33 @@ export const InventoryPage = () => {
     }
     
   }, [currentChaza]);
+
+  const onFilter=(filter)=>{
+    //startLoadingProducts(currentChaza._id);
+    startFilterProduct(filter,currentChaza._id);
+  }
   
   return (
     <div className='container text-center' >
         <div className="row-2 mt-4 mb-4">
           <ChazaInfo/>
-          <ChazaFilter/>
+
+          <ChazaFilter
+          filter={{
+            price:"ninguno",
+            type:"ninguno",
+            stock:"ninguno",
+            order:"Ascendente"
+          }} 
+          config={{
+            price:["ninguno","menor a 1000","entre 1000 y 3000","entre 3000 y 5000", "entre 5000 y 10000","mayor a 10000"],
+            type:["ninguno","bebida","comida","servicio","otro"],
+            order:["Ascendente","descendente"],
+            stock:["ninguno","0 elementos","entre 1 y 5 elementos","entre 5 y 10 elementos","entre 10 y 20 elementos","mas 20 elementos"]
+          }}
+          cb={onFilter}
+          />
+           
           <ProductList/>
           {/* <ChazaResult/> */}
         </div>
