@@ -17,35 +17,35 @@ export const ChazaCard = ({chaza={}}) => {
     }
 
   return (
-    <div className="row bg-success m-2 p-2 border border-black espace-pointer" onClick={()=>{startLoadCurrentChaza(chaza)}} onDoubleClick={()=>onNavigateChaza(chaza._id)}>
+    <div className="row  m-2 p-2 border border-black espace-pointer" onClick={()=>{startLoadCurrentChaza(chaza)}} onDoubleClick={()=>onNavigateChaza(chaza._id)}>
         <div className='col-sm-2'>
             <img src={chazita} alt="chaza" className="card-img border border-black"/>
         </div>
 
         <div className={`row col-sm-${(user.type==="Administrador")?9:10}`}>
-            <div className='bg-primary col m-2'>
+            <div className='bg-primary col m-2 d-flex justify-content-center align-items-center'>
                 <label>
                     Nombre: {chaza.name}
                 </label>
             </div>
-            <div className='bg-primary col m-2'>
+            <div className='bg-primary col m-2 d-flex justify-content-center align-items-center'>
                 <label>
                     Puntuacion: {chaza.punctuation}
                 </label>
             </div>
-            <div className='bg-primary col m-2'>
+            <div className='bg-primary col m-2 d-flex justify-content-center align-items-center'>
                 <label>
                     Fecha de creacion: {chaza.date}
                 </label>
             </div>
-            <div className='bg-primary col m-2'>
+            <div className='bg-primary col m-2 d-flex justify-content-center align-items-center'>
                 <label>
                     ubicacion: {chaza.location}
                 </label>
             </div>
         </div>
         {(user.type==="Administrador")
-        ?<div className='col'>
+        ?<div className='col d-flex justify-content-center align-items-center'>
             <button className='btn btn-danger' onClick={()=>deleteChaza(chaza._id)}>eliminar</button>
         </div>
         :""
