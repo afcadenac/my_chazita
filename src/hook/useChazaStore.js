@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { onChangeCurrentChaza, onDeleteChaza, onLoadChazas, onNewChaza } from "../store";
 import chazaApi from "../api/ChazaApi";
 import { useUserStore } from "./useUserStore";
+import { getFilteredChazas } from "../helpers";
 
 
 export const useChazaStore = () => {
@@ -62,6 +63,19 @@ export const useChazaStore = () => {
         dispatch(onChangeCurrentChaza(chaza));
     }
 
+    const startFilterChaza=async(filter)=>{
+        try {
+            const {data}=await chazaApi.get("/chaza");
+            let chazasFilter=data.chazas;
+
+            chazasFilter=getFilteredChazas(filter,chazasFilter);
+            
+            dispatch(onLoadChazas(chazasFilter));
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return {
         chazas,
         currentChaza,
@@ -70,6 +84,7 @@ export const useChazaStore = () => {
         startNewChaza,
         startLoadingChazas,
         startLoadCurrentChaza,
-        startLoadingChazasId
+        startLoadingChazasId,
+        startFilterChaza
     }
 }

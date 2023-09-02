@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import chazaApi from "../api/ChazaApi";
 import { onCloseModal, onDeleteUser, onLoadUsers, onUpdateUser } from "../store";
+import { getFilteredUsers } from "../helpers";
 
 
 export const useUserStore = () => {
@@ -39,11 +40,25 @@ export const useUserStore = () => {
         }
     }
 
+    const startFilterUser=async(filter)=>{
+        try {
+            const {data}=await chazaApi.get("/user");
+            let usersFilter=data.users;
+
+            usersFilter=getFilteredUsers(filter,usersFilter);
+            
+            dispatch(onLoadUsers(usersFilter));
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return {
         users,
 
         startLoadUser,
         startUpdateUser,
-        startDeleteUser
+        startDeleteUser,
+        startFilterUser
     }
 }

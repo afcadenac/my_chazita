@@ -26,11 +26,6 @@ export const ChazaFilter = memo(({filter={},config={},cb=()=>{}}) => {
               )
             })
           }
-          {/* <select name="" id="">
-            <option value="1">uno</option>
-            <option value="2">dos</option>
-            <option value="3">tres</option>
-          </select> */}
         </div>
         <div className="col-lg-1 p-2">
             <button className='btn btn-primary' onClick={()=>cb(formState)}>Filtrar</button>

@@ -16,6 +16,8 @@ export const ChazaCard = ({chaza={}}) => {
         navigate("/chazas/"+id);
     }
 
+    //console.log((new Date().getTime()-Date.parse("08/08/2023")))
+
   return (
     <div className="row bg-success m-2 p-2 border border-black espace-pointer" onClick={()=>{startLoadCurrentChaza(chaza)}} onDoubleClick={()=>onNavigateChaza(chaza._id)}>
         <div className='col-sm-2'>

@@ -7,7 +7,7 @@ export const ChazasPage = () => {
 
   const {startLoadUser}=useUserStore(); 
 
-  const {startLoadingChazas}=useChazaStore();
+  const {startLoadingChazas,startFilterChaza}=useChazaStore();
 
   const {user}=useAuthStore();
 
@@ -20,6 +20,11 @@ export const ChazasPage = () => {
   useEffect(() => {
     startLoadingChazas();
   }, []);
+
+  const onFilter=(filter)=>{
+    startFilterChaza(filter);
+  }
+
   return (
     <>
       <div className='container text-center' >
@@ -29,13 +34,14 @@ export const ChazasPage = () => {
           filter={{
             punctuation:"ninguno",
             date:"ninguno",
-            order:"Ascendente"
+            order:"ninguno"
           }} 
           config={{
             punctuation:["ninguno","mayor a 1","mayor a 2","mayor a 3", "mayor a 4","sobre 5"],
-            date:["ninguno","mas de un mes","mas de seis mes","mas de un año","mas de dos años"],
-            order:["Ascendente","descendente"]
+            date:["ninguno","menos de un mes","entre 1 a 6 meses","entre 6 meses a un año","mas de un años"],
+            order:["ninguno","Ascendente","descendente"]
           }}
+          cb={onFilter}
           />
           
           <ChazaResult/>
