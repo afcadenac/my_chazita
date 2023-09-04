@@ -8,7 +8,7 @@ export const ChazaInfo = () => {
   return (
     <div className='row  border border-dark bg-success mb-4 p-3'>
         <div className='col-md-3'>
-            <img src={choza} alt="choza" className="card-img border border-black"/>
+            <img src={"http://localhost:4000/"+currentChaza.photo} alt="choza" className="card-img border border-black"/>
         </div>
 
         <div className='col-md-9 bg-secondary p-2 border border-black d-flex'>

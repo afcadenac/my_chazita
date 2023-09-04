@@ -5,10 +5,13 @@ export const UsersTable = () => {
 
     const {users,startUpdateUser,startDeleteUser}=useUserStore();
     
-    const {openModal,ChangeValue}=useUiStore();
+    const {openModal,ChangeValue,ChangeValueSelector}=useUiStore();
 
     const onUpdate=(user)=>{
         ChangeValue(user);
+        ChangeValueSelector({
+            type:["Cliente","Dueño"]
+        });
         openModal();
     }
 

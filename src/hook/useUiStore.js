@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from "react-redux"
-import { onChangeValue, onCloseModal, onOpenModal } from "../store/slices/uiSlice";
+import { onChangeValue, onChangeValueSelector, onCloseModal, onOpenModal } from "../store/slices/uiSlice";
 
 
 export const useUiStore = () => {
 
-    const {isModalOpen,currentValue}=useSelector((state)=>state.ui);
+    const {isModalOpen,currentValue,currentValueSelector}=useSelector((state)=>state.ui);
     const dispatch=useDispatch();
 
     const openModal=()=>{
@@ -19,12 +19,18 @@ export const useUiStore = () => {
         dispatch(onChangeValue(value));
     }
 
+    const ChangeValueSelector=(value)=>{
+        dispatch(onChangeValueSelector(value));
+    }
+
     return {
         isModalOpen,
         currentValue,
+        currentValueSelector,
 
         openModal,
         closeModal,
-        ChangeValue
+        ChangeValue,
+        ChangeValueSelector
     }
 }

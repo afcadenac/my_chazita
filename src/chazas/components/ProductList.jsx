@@ -5,7 +5,7 @@ export const ProductList = () => {
 
   const {user}=useAuthStore();
   const {currentChaza}=useChazaStore();
-  const {ChangeValue,currentValue,openModal}=useUiStore();
+  const {ChangeValue,currentValue,openModal,ChangeValueSelector}=useUiStore();
 
   const {products,startNewProduct,startUpdateProduct}=useProductStore();
 
@@ -14,10 +14,15 @@ export const ProductList = () => {
       name:"",
       price:"",
       stock:"",
-      type:"",
+      type:"comida",
       description:"",
       photo:""
     });
+
+    ChangeValueSelector({
+      type:["comida","bebida","servicio","otro"]
+    });
+    
     openModal();
   }
 

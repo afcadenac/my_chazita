@@ -12,7 +12,6 @@ export const useAuthStore = () => {
         dispatch(onChecking());
         try {
             const {data}=await chazaApi.post("/auth/login",{email,password});
-            console.log(data);
 
             localStorage.setItem("token",data.token);
 

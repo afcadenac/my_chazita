@@ -4,7 +4,8 @@ export const uiSlice = createSlice({
     name: 'ui',
     initialState:{
         isModalOpen: false,
-        currentValue:{}
+        currentValue:{},
+        currentValueSelector:{}
     },
     reducers: {
         onOpenModal: (state) => {
@@ -16,9 +17,12 @@ export const uiSlice = createSlice({
         },
         onChangeValue: (state,{payload}) => {
             state.currentValue=payload;
+        },
+        onChangeValueSelector: (state,{payload}) => {
+            state.currentValueSelector=payload;
         }
     },
 });
 
 // Action creators are generated for each case reducer function
-export const { onOpenModal,onCloseModal,onChangeValue } = uiSlice.actions
+export const { onOpenModal,onCloseModal,onChangeValue,onChangeValueSelector } = uiSlice.actions
