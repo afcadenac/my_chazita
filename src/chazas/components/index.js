@@ -21,3 +21,5 @@ export * from "./ChazaResult";
 export * from "./ChazaInfo";
 
 export * from "./ProductList";
+
+export * from "./ModalPhoto";

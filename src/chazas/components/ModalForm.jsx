@@ -27,6 +27,7 @@ export const ModalForm = ({make}) => {
 
     const onSubmitForm=(e)=>{
         e.preventDefault();
+        make(formState)
     }
 
   return (
@@ -34,7 +35,7 @@ export const ModalForm = ({make}) => {
         isOpen={isModalOpen}
         onRequestClose={closeModal}
         style={customStyles}
-        closeTimeoutMS={200}
+        //closeTimeoutMS={200}
     >
 
         <h1>Modal</h1>
@@ -45,17 +46,18 @@ export const ModalForm = ({make}) => {
 
                     (currentValueSelector[i.name])
                     ?(
-                    <ValueSelect key={i.name} selector={{...i,value:formState[i.name]}} options={currentValueSelector[i.name]} cb={onInputChange}/>
+                        <ValueSelect key={i.name} selector={{...i,value:formState[i.name]}} options={currentValueSelector[i.name]} cb={onInputChange}/>
                     )
+
                     :(
-                    <div key={i.name} className="form-group mb-2">                   
-                        <input className="form-control" type="text" name={i.name} value={formState[i.name] || ""} onChange={onInputChange} placeholder={i.name}></input>
-                    </div>
+                        <div key={i.name} className="form-group mb-2">                   
+                            <input className="form-control" type="text" name={i.name} value={formState[i.name] || ""} onChange={onInputChange} placeholder={i.name}></input>
+                        </div>
                     )
                     
                 ))
             }
-            <button className="btn btn-primary" onClick={()=>make(formState)}>Enviar</button>
+            <button className="btn btn-primary mt-2">Enviar</button>
         </form>
         
     </Modal>

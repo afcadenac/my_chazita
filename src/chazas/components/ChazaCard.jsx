@@ -17,12 +17,10 @@ export const ChazaCard = ({chaza={}}) => {
         navigate("/chazas/"+id);
     }
 
-    console.log(`http://localhost:4000/uploads//1693790296500-1.jpg`);
-
   return (
     <div className="row bg-success m-2 p-2 border border-black espace-pointer" onClick={()=>{startLoadCurrentChaza(chaza)}} onDoubleClick={()=>onNavigateChaza(chaza._id)}>
         <div className='col-sm-2'>
-            <img src={"http://localhost:4000/"+chaza.photo} alt={chaza.name} className="card-img border border-black"/>
+            <img src={getEnvVariables().VITE_PHOTO_URL+chaza.photo} alt={chaza.name} className="card-img border border-black"/>
         </div>
 
         <div className={`row col-sm-${(user.type==="Administrador")?9:10}`}>

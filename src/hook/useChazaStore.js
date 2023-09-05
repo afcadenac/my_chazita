@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux"
-import { onChangeCurrentChaza, onDeleteChaza, onLoadChazas, onNewChaza } from "../store";
+import { onChangeCurrentChaza, onCloseModal, onDeleteChaza, onLoadChazas, onNewChaza, onUpdateChaza } from "../store";
 import chazaApi from "../api/ChazaApi";
 import { useUserStore } from "./useUserStore";
 import { getFilteredChazas } from "../helpers";
@@ -36,6 +36,30 @@ export const useChazaStore = () => {
             await startUpdateUser({...user,chaza:data.cid});
             dispatch(onNewChaza({_id:data.cid, name:data.name, location:data.location, photo:data.photo, punctuation:data.punctuation, date:data.date}));
             
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const startUpdateChaza=async(chaza)=>{
+        try {
+            await chazaApi.put("/chaza/"+chaza._id,{...chaza});
+            dispatch(onUpdateChaza(chaza));
+            dispatch(onChangeCurrentChaza(chaza));
+            dispatch(onCloseModal());
+            
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const startUpdateChazaPhoto=async(photo)=>{
+        try {
+            await chazaApi.post("/image/delete",{path:currentChaza.photo});
+            const {data}=await chazaApi.post("/image",photo);
+
+            await startUpdateChaza({...currentChaza,photo:data.url});
+            dispatch(onCloseModal()); 
         } catch (error) {
             console.log(error);
         }
@@ -85,6 +109,8 @@ export const useChazaStore = () => {
         startLoadingChazas,
         startLoadCurrentChaza,
         startLoadingChazasId,
-        startFilterChaza
+        startFilterChaza,
+        startUpdateChaza,
+        startUpdateChazaPhoto
     }
 }

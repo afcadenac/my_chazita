@@ -1,14 +1,39 @@
 import choza from '../../assets/images/choza.jpg'
-import { useChazaStore } from '../../hook';
+import { getEnvVariables } from '../../helpers';
+import { useAuthStore, useChazaStore, useProductStore, useUiStore } from '../../hook';
+import { ModalPhoto } from './ModalPhoto';
 
 export const ChazaInfo = () => {
 
-  const {currentChaza}=useChazaStore();
+  const {currentChaza,startUpdateChazaPhoto}=useChazaStore();
+  const {user}=useAuthStore();
+  const {openModalPhoto,closeModalPhoto,ChangeTypePhoto,currentTypePhoto}=useUiStore();
+  const {startUpdateProductPhoto}=useProductStore();
+
+  const onPhotoChange=(photo)=>{
+    const formData = new FormData();
+    formData.append('photo', photo);
+    
+    if(currentTypePhoto==="chaza") startUpdateChazaPhoto(formData);
+
+    if(currentTypePhoto==="product") startUpdateProductPhoto(formData);
+
+    closeModalPhoto();
+  }
+
+  const onOpenModalPhoto=(photo)=>{
+    ChangeTypePhoto("chaza");
+    openModalPhoto();
+  }
 
   return (
-    <div className='row  border border-dark bg-success mb-4 p-3'>
+    <>
+      <div className='row  border border-dark bg-success mb-4 p-3'>
         <div className='col-md-3'>
-            <img src={"http://localhost:4000/"+currentChaza.photo} alt="choza" className="card-img border border-black"/>
+            <img src={getEnvVariables().VITE_PHOTO_URL+currentChaza.photo} alt="choza" className="card-img border border-black"/>
+            {
+              (user.chaza===currentChaza._id) && <button className='btn btn-primary' onClick={onOpenModalPhoto}>cambiar</button>
+            }
         </div>
 
         <div className='col-md-9 bg-secondary p-2 border border-black d-flex'>
@@ -28,6 +53,9 @@ export const ChazaInfo = () => {
           </div>
           
         </div>
-    </div>
+      </div>
+
+      <ModalPhoto make={onPhotoChange}/>
+    </>
   )
 }

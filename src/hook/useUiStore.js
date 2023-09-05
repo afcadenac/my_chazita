@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from "react-redux"
-import { onChangeValue, onChangeValueSelector, onCloseModal, onOpenModal } from "../store/slices/uiSlice";
+import { onChangeTypePhoto, onChangeValue, onChangeValueSelector, onCloseModal, onCloseModalPhoto, onOpenModal, onOpenModalPhoto } from "../store/slices/uiSlice";
 
 
 export const useUiStore = () => {
 
-    const {isModalOpen,currentValue,currentValueSelector}=useSelector((state)=>state.ui);
+    const {isModalOpen,currentValue,currentValueSelector,isModalPhotoOpen, currentTypePhoto}=useSelector((state)=>state.ui);
     const dispatch=useDispatch();
 
     const openModal=()=>{
@@ -15,6 +15,14 @@ export const useUiStore = () => {
         dispatch(onCloseModal());
     }
 
+    const openModalPhoto=()=>{
+        dispatch(onOpenModalPhoto());
+    }
+
+    const closeModalPhoto=()=>{
+        dispatch(onCloseModalPhoto());
+    }
+
     const ChangeValue=(value)=>{
         dispatch(onChangeValue(value));
     }
@@ -23,14 +31,23 @@ export const useUiStore = () => {
         dispatch(onChangeValueSelector(value));
     }
 
+    const ChangeTypePhoto=(value)=>{
+        dispatch(onChangeTypePhoto(value));
+    }
+
     return {
         isModalOpen,
         currentValue,
         currentValueSelector,
+        isModalPhotoOpen,
+        currentTypePhoto,
 
         openModal,
         closeModal,
         ChangeValue,
-        ChangeValueSelector
+        ChangeValueSelector,
+        closeModalPhoto,
+        openModalPhoto,
+        ChangeTypePhoto
     }
 }
