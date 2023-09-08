@@ -57,3 +57,13 @@
 .w-10{
     width: 600px;
 }
+
+.loginbg{
+    background: #0B666A;
+  }
+  
+  .loginform{
+    border-radius: 10px;
+    padding: 30px;
+    border: 1px solid #0B666A;
+  }

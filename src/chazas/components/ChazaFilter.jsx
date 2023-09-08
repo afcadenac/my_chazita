@@ -1,8 +1,10 @@
 import React from 'react'
 
+import "../../styles.css";
+
 export const ChazaFilter = () => {
   return (
-    <div className='row  border border-dark bg-danger mb-4 '>
+    <div className='row  border border-dark bgfilter m-4'>
         <div className="col-md-4 p-2">
             <input type="text" className="form-control" placeholder='Buscar'/>
         </div>

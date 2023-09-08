@@ -20,6 +20,9 @@ export const InventoryPage = () => {
     if(id===undefined && user.chaza && currentChaza._id!==user.chaza){
       startLoadingChazasId(user.chaza);
     }
+    if(id && !currentChaza._id){
+      startLoadingChazasId(id)
+    }
   }, [id]);
 
   useEffect(() => {

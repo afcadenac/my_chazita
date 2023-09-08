@@ -6,6 +6,10 @@ import { useForm } from '../../hook/useForm';
 import './LoginPage.css';
 import { useAuthStore } from '../../hook';
 
+import "animate.css";
+
+
+
 export const LoginPage = () => {
 
     const { formState, onInputChange, email, password } = useForm({
@@ -21,9 +25,9 @@ export const LoginPage = () => {
     }
 
     return (
-        <div className='d-flex justify-content-center align-items-center'>
-            <div className="login-form-2 mt-6 w-10">
-                <h3 className='mb-5'>Ingreso</h3>
+        <div className='d-flex justify-content-center align-items-center '>
+            <div className="container d-flex flex-column mt-6 w-10 loginform animate__backInDown">
+                <h3 className='m-5 text-white d-flex justify-content-center'>Ingreso</h3>
                 <form onSubmit={onSubmitLogin}>
                     <div className="form-group mb-2">
                         <input 
@@ -48,12 +52,12 @@ export const LoginPage = () => {
                     <div className="d-grid gap-2">
                         <input 
                             type="submit"
-                            className="btnSubmit"
+                            className="btnSubmit loginbg"
                             value="Login" 
                         />
                     </div>
                     <div className='mt-5 d-flex justify-content-center'>
-                    <label className='me-2'>¿Aun no tiene cuenta?</label>
+                    <label className='me-2 text-white'>¿Aun no tiene cuenta?</label>
                     <Link to='/auth/register' className='text-white'>Ingrese aqui</Link>
                     </div>
                 </form>
