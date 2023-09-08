@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { ChazaFilter, ChazaModal, ChazaResult } from "../components"
 import { useAuthStore, useChazaStore, useUserStore } from "../../hook";
+import 'animate.css';
+import "../../styles.css"
 
 
 export const ChazasPage = () => {
@@ -28,7 +30,7 @@ export const ChazasPage = () => {
   return (
     <>
       <div className='container text-center' >
-        <div className="row-2 mt-4 mb-4">
+        <div className="container text-center bgeneral animate__animated animate__fadeInUp">
 
           <ChazaFilter 
           filter={{
@@ -45,9 +47,12 @@ export const ChazasPage = () => {
           />
           
           <ChazaResult/>
+        
+          <ChazaModal/>
         </div>
-        <ChazaModal/>
+          
       </div>
     </>
+    
   )
 }

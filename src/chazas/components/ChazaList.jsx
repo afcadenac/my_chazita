@@ -1,5 +1,6 @@
 import { useChazaStore } from "../../hook";
-import { ChazaCard } from "./";
+import { ChazaCard } from "./ChazaCard";
+
 
 
 export const ChazaList = () => {

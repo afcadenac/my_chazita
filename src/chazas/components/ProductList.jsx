@@ -1,15 +1,21 @@
-import { useAuthStore, useChazaStore, useProductStore, useUiStore } from '../../hook';
-import { ModalForm, ProductCard } from './'
+import {
+  useAuthStore,
+  useChazaStore,
+  useProductStore,
+  useUiStore,
+} from "../../hook";
+import { ModalForm, ProductCard } from "./";
+
+import "../../styles.css";
+
 
 export const ProductList = () => {
+  const { user } = useAuthStore();
+  const { currentChaza } = useChazaStore();
+  const { ChangeValue, currentValue, openModal,ChangeValueSelector } = useUiStore();
+  const { products, startNewProduct, startUpdateProduct, } = useProductStore();
 
-  const {user}=useAuthStore();
-  const {currentChaza}=useChazaStore();
-  const {ChangeValue,currentValue,openModal,ChangeValueSelector}=useUiStore();
-
-  const {products,startNewProduct,startUpdateProduct}=useProductStore();
-
-  const onNewProduct=()=>{
+  const onNewProduct = () => {
     ChangeValue({
       name:"",
       price:"",
@@ -24,30 +30,32 @@ export const ProductList = () => {
     });
     
     openModal();
-  }
+  };
 
-  const onSubmitProduct=(product)=>{
-    if(product._id){
+  const onSubmitProduct = (product) => {
+    if (product._id) {
       startUpdateProduct(product);
       return;
     }
 
     startNewProduct(product);
-  }
+  };
 
   return (
-    <div className='row  border border-dark bg-primary mb-4 p-3'>
-        {
-          products.map((product)=><ProductCard key={product._id} list={product}/>)
-        }
+    <div className="row border-0  d-flex justify-content-between align-items-center gap-4 prodlist">
+      {products.map((product) => (
+        <ProductCard key={product._id} list={product} />
+      ))}
 
-        {
-          (user.chaza===currentChaza._id && currentChaza._id)
-          ?(<button className='btn btn-success mt-2' onClick={onNewProduct}>Nuevo</button>)
-          :""
-        }
+      {user.chaza === currentChaza._id && currentChaza._id ? (
+        <button className="btn btn-success mt-2" onClick={onNewProduct}>
+          Nuevo
+        </button>
+      ) : (
+        ""
+      )}
 
-        <ModalForm make={onSubmitProduct}/>
+      <ModalForm make={onSubmitProduct} />
     </div>
-  )
-}
+  );
+};
