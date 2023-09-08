@@ -41,7 +41,7 @@ export const ModalPhoto = ({make}) => {
         <h1>Modal</h1>
         <hr />
         <form onSubmit={onSubmitForm} className="container">
-            <input type="file" name="photo" onChange={onPhotoChange}/>
+            <input className="form-control" type="file" name="photo" onChange={onPhotoChange}/>
             <button className="btn btn-primary mt-2">Enviar</button>
         </form>
         
