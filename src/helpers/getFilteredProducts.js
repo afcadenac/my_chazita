@@ -11,6 +11,19 @@ export const getFilteredProducts = (filter={},productFilter=[]) => {
         });
     }
 
+    switch (filter.order) {
+        case "Ascendente":
+            productFilter=productFilter.sort((x, y) => x.name.localeCompare(y.name));
+            break;
+
+        case "descendente":
+            productFilter=productFilter.sort((x, y) => x.name.localeCompare(y.name)).reverse();
+            break;
+    
+        default:
+            break;
+    }
+
     switch (filter.price) {
         case "menor a 1000":
             productFilter=productFilter.filter((product)=>product.price<1000);

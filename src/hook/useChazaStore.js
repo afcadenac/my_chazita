@@ -1,7 +1,8 @@
 import { useDispatch, useSelector } from "react-redux"
-import { onChangeCurrentChaza, onDeleteChaza, onLoadChazas, onNewChaza } from "../store";
+import { onChangeCurrentChaza, onCloseModal, onDeleteChaza, onLoadChazas, onNewChaza, onUpdateChaza } from "../store";
 import chazaApi from "../api/ChazaApi";
 import { useUserStore } from "./useUserStore";
+import { getFilteredChazas } from "../helpers";
 
 
 export const useChazaStore = () => {
@@ -40,6 +41,30 @@ export const useChazaStore = () => {
         }
     }
 
+    const startUpdateChaza=async(chaza)=>{
+        try {
+            await chazaApi.put("/chaza/"+chaza._id,{...chaza});
+            dispatch(onUpdateChaza(chaza));
+            dispatch(onChangeCurrentChaza(chaza));
+            dispatch(onCloseModal());
+            
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const startUpdateChazaPhoto=async(photo)=>{
+        try {
+            await chazaApi.post("/image/delete",{path:currentChaza.photo});
+            const {data}=await chazaApi.post("/image",photo);
+
+            await startUpdateChaza({...currentChaza,photo:data.url});
+            dispatch(onCloseModal()); 
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     const startLoadingChazas=async()=>{
         try {
             const {data}=await chazaApi.get("/chaza");
@@ -62,6 +87,19 @@ export const useChazaStore = () => {
         dispatch(onChangeCurrentChaza(chaza));
     }
 
+    const startFilterChaza=async(filter)=>{
+        try {
+            const {data}=await chazaApi.get("/chaza");
+            let chazasFilter=data.chazas;
+
+            chazasFilter=getFilteredChazas(filter,chazasFilter);
+            
+            dispatch(onLoadChazas(chazasFilter));
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return {
         chazas,
         currentChaza,
@@ -70,6 +108,9 @@ export const useChazaStore = () => {
         startNewChaza,
         startLoadingChazas,
         startLoadCurrentChaza,
-        startLoadingChazasId
+        startLoadingChazasId,
+        startFilterChaza,
+        startUpdateChaza,
+        startUpdateChazaPhoto
     }
 }

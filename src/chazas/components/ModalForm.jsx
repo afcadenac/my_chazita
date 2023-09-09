@@ -2,6 +2,7 @@ import Modal from "react-modal"
 import { useForm, useUiStore } from "../../hook";
 import { useEffect } from "react";
 import { convertToVector } from "../../helpers";
+import { ValueSelect } from "./ValueSelect";
 
 const customStyles = {
     content: {
@@ -17,18 +18,16 @@ const customStyles = {
 Modal.setAppElement("#root");
 
 export const ModalForm = ({make}) => {
-    const {isModalOpen,closeModal,currentValue,ChangeValue}=useUiStore();
+    const {isModalOpen,closeModal,currentValue,ChangeValue,currentValueSelector}=useUiStore();
     const {formState,onInputChange,setFormState}=useForm(currentValue);
-
     
     useEffect(() => {
       setFormState(currentValue);
-    }, [currentValue])
-    
+    }, [currentValue])   
 
     const onSubmitForm=(e)=>{
         e.preventDefault();
-   
+        make(formState)
     }
 
   return (
@@ -36,7 +35,7 @@ export const ModalForm = ({make}) => {
         isOpen={isModalOpen}
         onRequestClose={closeModal}
         style={customStyles}
-        closeTimeoutMS={200}
+        //closeTimeoutMS={200}
     >
 
         <h1>Modal</h1>
@@ -44,14 +43,21 @@ export const ModalForm = ({make}) => {
         <form onSubmit={onSubmitForm} className="container">
             {
                 convertToVector(currentValue).map((i)=>(
-                    <div key={i.name} className="form-group mb-2"> 
-                  
-                        <input className="form-control" type="text" name={i.name} value={formState[i.name] || ""} onChange={onInputChange} placeholder={i.name}></input>
-                    </div>
+
+                    (currentValueSelector[i.name])
+                    ?(
+                        <ValueSelect key={i.name} selector={{...i,value:formState[i.name]}} options={currentValueSelector[i.name]} cb={onInputChange}/>
+                    )
+
+                    :(
+                        <div key={i.name} className="form-group mb-2">                   
+                            <input className="form-control" type="text" name={i.name} value={formState[i.name] || ""} onChange={onInputChange} placeholder={i.name}></input>
+                        </div>
+                    )
                     
                 ))
             }
-            <button className="btn btn-primary" onClick={()=>make(formState)}>Enviar</button>
+            <button className="btn btn-primary mt-2">Enviar</button>
         </form>
         
     </Modal>

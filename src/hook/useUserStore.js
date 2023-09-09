@@ -1,16 +1,32 @@
 import { useDispatch, useSelector } from "react-redux";
 import chazaApi from "../api/ChazaApi";
-import { onCloseModal, onDeleteUser, onLoadUsers, onUpdateUser } from "../store";
+import { onChangeValue, onCloseModal, onCloseModalPhoto, onDeleteUser, onLoadUsers, onLogin, onUpdateUser } from "../store";
+import { getFilteredUsers } from "../helpers";
+import { useUiStore } from "./useUiStore";
+import { useAuthStore } from "./useAuthStore";
 
 
 export const useUserStore = () => {
     const {users}=useSelector((state)=>state.user)
     const dispatch=useDispatch();
 
+    const {currentValue}=useUiStore()
+    const {user,startLogin}=useAuthStore();
+
     const startLoadUser=async()=>{
         try {
             const {data}=await chazaApi.get("/user");
             dispatch(onLoadUsers(data.users));
+            
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const startLoadUserById=async()=>{
+        try {
+            const {data}=await chazaApi.get("/user/"+user.uid);
+            dispatch(onChangeValue(data.user));
             
         } catch (error) {
             console.log(error)
@@ -29,6 +45,25 @@ export const useUserStore = () => {
         }
     }
 
+    const startUpdateUserPhoto=async(photo)=>{
+        try {
+            await chazaApi.post("/image/delete",{path:currentValue.photo});
+            const resp=await chazaApi.post("/image",photo);
+
+            await startUpdateUser({...currentValue,photo:resp.data.url});
+            dispatch(onCloseModalPhoto()); 
+
+            const {data}=await chazaApi.get("/auth/updatelogin");
+
+            console.log(data);
+
+            localStorage.setItem("token",data.token);
+            dispatch(onLogin({name:data.name,uid:data.uid,type:data.type,chaza:data.chaza,email:data.email,photo:data.photo}));
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     const startDeleteUser=async(id)=>{
         try {
             const {data}=await chazaApi.delete(`/user/${id}`);
@@ -39,11 +74,27 @@ export const useUserStore = () => {
         }
     }
 
+    const startFilterUser=async(filter)=>{
+        try {
+            const {data}=await chazaApi.get("/user");
+            let usersFilter=data.users;
+
+            usersFilter=getFilteredUsers(filter,usersFilter);
+            
+            dispatch(onLoadUsers(usersFilter));
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return {
         users,
 
         startLoadUser,
         startUpdateUser,
-        startDeleteUser
+        startDeleteUser,
+        startFilterUser,
+        startLoadUserById,
+        startUpdateUserPhoto
     }
 }

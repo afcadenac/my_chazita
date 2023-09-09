@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import chazita from '../../assets/images/choza.jpg'
 import { useAuthStore, useChazaStore } from '../../hook'
 import '../../styles.css';
+import { getEnvVariables } from '../../helpers';
 
 export const ChazaCard = ({chaza={}}) => {
     const {user}=useAuthStore();
@@ -19,7 +20,7 @@ export const ChazaCard = ({chaza={}}) => {
   return (
     <div className="row  m-2 p-2 border border-black espace-pointer" onClick={()=>{startLoadCurrentChaza(chaza)}} onDoubleClick={()=>onNavigateChaza(chaza._id)}>
         <div className='col-sm-2'>
-            <img src={chazita} alt="chaza" className="card-img border border-black"/>
+            <img src={getEnvVariables().VITE_PHOTO_URL+chaza.photo} alt={chaza.name} className="card-img border border-black"/>
         </div>
 
         <div className={`row col-sm-${(user.type==="Administrador")?9:10}`}>
@@ -35,7 +36,7 @@ export const ChazaCard = ({chaza={}}) => {
             </div>
             <div className='bg-primary col m-2 d-flex justify-content-center align-items-center'>
                 <label>
-                    Fecha de creacion: {chaza.date}
+                    Fecha de creacion: {new Date(chaza.date).getDate()+1}-{new Date(chaza.date).getMonth()+1}-{new Date(chaza.date).getFullYear()}  {new Date(chaza.date).getHours()+1}:{new Date(chaza.date).getMinutes()+1}:{new Date(chaza.date).getSeconds()}
                 </label>
             </div>
             <div className='bg-primary col m-2 d-flex justify-content-center align-items-center'>

@@ -1,9 +1,10 @@
 import { useDispatch, useSelector } from "react-redux"
-import { onDeleteProduct, onLoadProducts, onNewProduct, onUpdateProduct } from "../store";
+import { onCloseModal, onCloseModalPhoto, onDeleteProduct, onLoadProducts, onNewProduct, onUpdateProduct } from "../store";
 import chazaApi from "../api/ChazaApi";
 import { useUserStore } from "./useUserStore";
 import { useAuthStore } from "./useAuthStore";
 import { getFilteredProducts } from "../helpers";
+import { useUiStore } from "./useUiStore";
 
 
 export const useProductStore = () => {
@@ -13,6 +14,7 @@ export const useProductStore = () => {
 
     const {startUpdateUser,users}=useUserStore();
     const {user}=useAuthStore();
+    const {currentValue}=useUiStore();
 
     const startDeleteProduct=async(product)=>{
         try {
@@ -30,6 +32,7 @@ export const useProductStore = () => {
         try {
             const {data}=await chazaApi.post("/product",{...product,chaza:user.chaza});
             dispatch(onNewProduct({...product,_id:data.pid}));
+            dispatch(onCloseModal());
             
         } catch (error) {
             console.log(error);
@@ -40,7 +43,19 @@ export const useProductStore = () => {
         try {
             await chazaApi.put("/product/"+product._id,{...product});
             dispatch(onUpdateProduct(product));
-            
+            dispatch(onCloseModal()); 
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const startUpdateProductPhoto=async(photo)=>{
+        try {
+            await chazaApi.post("/image/delete",{path:currentValue.photo});
+            const {data}=await chazaApi.post("/image",photo);
+
+            await startUpdateProduct({...currentValue,photo:data.url});
+            dispatch(onCloseModalPhoto()); 
         } catch (error) {
             console.log(error);
         }
@@ -95,6 +110,7 @@ export const useProductStore = () => {
         startNewProduct,
         startUpdateProduct,
         startFilterProduct,
+        startUpdateProductPhoto,
 
         startCloseProduct
     }

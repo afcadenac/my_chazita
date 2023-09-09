@@ -2,6 +2,7 @@ import { memo } from 'react'
 import { useForm } from '../../hook/useForm'
 import { convertToVector } from '../../helpers/convertToVector';
 import { ValueSelect } from './ValueSelect';
+import "../../styles.css";
 
 export const ChazaFilter = memo(({filter={},config={},cb=()=>{}}) => {
 
@@ -12,11 +13,11 @@ export const ChazaFilter = memo(({filter={},config={},cb=()=>{}}) => {
   }
   
   return (
-    <div className='row  border border-dark bg-danger mb-4'>
+    <div className='row  border border-dark bgfilter m-4'>
         <div className="col-md-4 p-2">
             <input type="text" className="form-control" placeholder="Nombre" onChange={onInputChange} name='name' value={formState.name}/>
         </div>
-        <div className="col-md-7 p-2 row">
+        <div className="col-md-7 p-2 row d-flex justify-content-center align-items-center">
 
           {
             convertToVector(formState).map((selector)=>{
@@ -26,11 +27,6 @@ export const ChazaFilter = memo(({filter={},config={},cb=()=>{}}) => {
               )
             })
           }
-          {/* <select name="" id="">
-            <option value="1">uno</option>
-            <option value="2">dos</option>
-            <option value="3">tres</option>
-          </select> */}
         </div>
         <div className="col-lg-1 p-2">
             <button className='btn btn-primary' onClick={()=>cb(formState)}>Filtrar</button>

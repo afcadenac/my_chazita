@@ -12,11 +12,10 @@ export const useAuthStore = () => {
         dispatch(onChecking());
         try {
             const {data}=await chazaApi.post("/auth/login",{email,password});
-            console.log(data);
 
             localStorage.setItem("token",data.token);
 
-            dispatch(onLogin({name:data.name,uid:data.uid,type:data.type,chaza:data.chaza}));
+            dispatch(onLogin({name:data.name,uid:data.uid,type:data.type,chaza:data.chaza,email:data.email,photo:data.photo}));
         } catch (error) {
             Swal.fire("Error al iniciar sesion",error.response.data.msg || "datos invalidos","error");
             dispatch(onLogout("error xd"));
@@ -31,7 +30,7 @@ export const useAuthStore = () => {
 
             localStorage.setItem("token",data.token);
 
-            dispatch(onLogin({name:data.name,uid:data.uid,type:data.type,chaza:data.chaza}));
+            dispatch(onLogin({name:data.name,uid:data.uid,type:data.type,chaza:data.chaza,email:data.email}));
         } catch (error) {
             console.log(error);
             
@@ -59,7 +58,7 @@ export const useAuthStore = () => {
             //console.log(data);
 
             localStorage.setItem("token",data.token);
-            dispatch(onLogin({name:data.name, uid:data.uid, type:data.type, chaza:data.chaza}));
+            dispatch(onLogin({name:data.name, uid:data.uid, type:data.type, chaza:data.chaza,email:data.email,photo:data.photo}));
         } catch (error) {
             localStorage.clear();
             Swal.fire("cerrando sesion",error.response.data.msg || "datos invalidos","error");

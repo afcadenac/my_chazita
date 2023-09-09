@@ -1,6 +1,9 @@
 import { Link, NavLink, useNavigate } from "react-router-dom"
 import { useAuthStore } from "../../hook";
 
+import "../../styles.css";
+import { Dropdown } from "../components/Dropdown";
+
 export const Navbar = () => {
 
   const {status,startLogout,user}=useAuthStore();
@@ -16,9 +19,9 @@ export const Navbar = () => {
   }
 
   return (
-    <nav className="navbar navbar-expand-sm navbar-dark bg-dark p-2">
+    <nav className="navbar navbar-expand-sm navbar-dark navbg p-2">
       
-      <Link to="/" className="navbar-brand">Home</Link>
+      <Link to="/" className="navbar-brand ms-4 me-5">Home</Link>
 
       <div className="navbar-collapse">
 
@@ -54,17 +57,14 @@ export const Navbar = () => {
       </div>
 
       <div className="navbar-collapse collapse w-100 order-3 dual-collapse2 d-flex justify-content-end">
-          <ul className="navbar-nav ml-auto">
-              
-            <span className='nav-item nav-link text-primary'>{user.name}</span>
-
-            {
-              (status==="not-authenticated")
-              ?<button className='btn btn-primary' onClick={onLogin}>Ingresar</button>
-              :<button className='btn btn-primary' onClick={onLogout}>Salir</button>
-            }
-
-          </ul>
+        <ul className="navbar-nav ml-auto">
+          {
+            (status==="not-authenticated")
+            ?<button className='btn btnav text-white me-4' onClick={onLogin}>Ingresar</button>
+            :<Dropdown/>
+          }
+          
+        </ul>
       </div>
 
     </nav>

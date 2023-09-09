@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 export const chazaSlice = createSlice({
     name: 'chaza',
     initialState:{
-        chazas: [],
+        chazas: null,
         currentChaza:{}
     },
     reducers: {

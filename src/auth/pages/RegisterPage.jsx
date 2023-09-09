@@ -3,6 +3,8 @@ import { useAuthStore } from '../../hook';
 import { useForm } from '../../hook/useForm';
 import './LoginPage.css';
 
+import "animate.css";
+
 export const RegisterPage = () => {
 
     const { formState, onInputChange, username, email, password, confirmPassword  } = useForm({
@@ -25,9 +27,9 @@ export const RegisterPage = () => {
     }
 
   return (
-    <div className='d-flex justify-content-center align-items-center'>
-        <div className="login-form-2 mt-6 w-10">
-            <h3 className='mb-5'>Registro</h3>
+    <div className='d-flex justify-content-center align-items-center animate__backInDown'>
+        <div className="container d-flex flex-column mt-6 w-10 loginform">
+            <h3 className='m-5 text-white d-flex justify-content-center'>Registro</h3>
             <form onSubmit={onSubmitRegister}>
                 <div className="form-group mb-2">
                     <input
@@ -74,7 +76,7 @@ export const RegisterPage = () => {
                 <div className="d-grid gap-2">
                     <input 
                         type="submit" 
-                        className="btnSubmit" 
+                        className="btnSubmit loginbg" 
                         value="Crear cuenta" />
                 </div>
             </form>
