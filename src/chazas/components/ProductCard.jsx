@@ -1,54 +1,68 @@
-import producto from '../../assets/images/producto.jpg'
-import { getEnvVariables } from '../../helpers';
-import { useAuthStore, useChazaStore, useProductStore, useUiStore } from '../../hook'
-import '../../styles.css';
-import { ModalPhoto } from './ModalPhoto';
-import 'animate.css';
+import { getEnvVariables } from "../../helpers";
+import {
+  useAuthStore,
+  useChazaStore,
+  useProductStore,
+  useUiStore,
+} from "../../hook";
+import placeholderImage from "../../assets/images/imageDefault.jpg";
 import "../../styles.css";
+import "animate.css";
 
-export const ProductCard = ({list={}}) => {
+export const ProductCard = ({ list = {} }) => {
+  const { currentChaza } = useChazaStore();
+  const { user } = useAuthStore();
+  const {
+    ChangeValue,
+    openModal,
+    ChangeValueSelector,
+    openModalPhoto,
+    closeModalPhoto,
+    ChangeTypePhoto,
+  } = useUiStore();
+  const { startDeleteProduct } = useProductStore();
 
-  const {currentChaza}=useChazaStore();
-  const {user}=useAuthStore();
-  const {ChangeValue,openModal,ChangeValueSelector,openModalPhoto,closeModalPhoto,ChangeTypePhoto}=useUiStore();
-  const {startDeleteProduct}=useProductStore();
-
-  const onChangeValue=()=>{
-    if(list.chaza===user.chaza){
+  const onChangeValue = () => {
+    if (list.chaza === user.chaza) {
       ChangeValueSelector({
-        type:["bebida","comida","servicio","otro"]
+        type: ["bebida", "comida", "servicio", "otro"],
       });
-      ChangeValue(list)
+      ChangeValue(list);
     }
-  }
+  };
 
-  const onOpenModal=()=>{
-    if(list.chaza===user.chaza){
-      openModal()
+  const onOpenModal = () => {
+    if (list.chaza === user.chaza) {
+      openModal();
     }
-  }
+  };
 
-  const onOpenModalPhoto=(photo)=>{
+  const onOpenModalPhoto = (photo) => {
     ChangeTypePhoto("product");
     openModalPhoto();
-  }
+  };
 
   return (
     <div
-      className="card cardshadow cardstyle p-0 border-dark animate__animated animate__fadeInUp" 
+      className="card cardshadow cardstyle p-0 border-dark animate__animated animate__fadeInUp"
       onClick={() => ChangeValue(list)}
       onDoubleClick={openModal}
     >
       <div className="row g-0 imgp">
         <div className="col-md-4 allcard">
           <img
-            src={getEnvVariables().VITE_PHOTO_URL+list.photo || producto}
+            src={
+              list.photo === "Por definir" ||
+              list.photo === undefined ||
+              list.photo === null
+                ? placeholderImage
+                : getEnvVariables().VITE_PHOTO_URL + list.photo
+            }
             className="img-fluid rounded-start imag"
             alt="..."
           />
-          
         </div>
-        
+
         <div className="col-md-8 ">
           <div className="card-body ">
             <h5 className="card-title ">{list.name}</h5>
@@ -62,10 +76,14 @@ export const ProductCard = ({list={}}) => {
                 Descripcion: {list.description}
               </small>
             </p>
-            {
-              (user.chaza===list.chaza) && 
+            {user.chaza === list.chaza && (
               <>
-                <button className='btn btn-primary mb-2 mx-2' onClick={onOpenModalPhoto}>cambiar foto</button>
+                <button
+                  className="btn btn-primary mb-2 mx-2"
+                  onClick={onOpenModalPhoto}
+                >
+                  cambiar foto
+                </button>
                 <button
                   className="btn btn-danger mb-2"
                   onClick={() => startDeleteProduct(list)}
@@ -73,9 +91,7 @@ export const ProductCard = ({list={}}) => {
                   eliminar
                 </button>
               </>
-            } 
-
-
+            )}
           </div>
         </div>
       </div>
