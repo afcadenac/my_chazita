@@ -3,13 +3,14 @@ import { ChazaFilter, ChazaModal, ChazaResult } from "../components"
 import { useAuthStore, useChazaStore, useUserStore } from "../../hook";
 import 'animate.css';
 import "../../styles.css"
+import { LoadingPage } from "./LoadingPage";
 
 
 export const ChazasPage = () => {
 
   const {startLoadUser}=useUserStore(); 
 
-  const {startLoadingChazas,startFilterChaza}=useChazaStore();
+  const {startLoadingChazas,startFilterChaza,chazas}=useChazaStore();
 
   const {user}=useAuthStore();
 
@@ -25,6 +26,10 @@ export const ChazasPage = () => {
 
   const onFilter=(filter)=>{
     startFilterChaza(filter);
+  }
+
+  if(chazas===null){
+    return <LoadingPage/>
   }
 
   return (

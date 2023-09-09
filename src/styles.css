@@ -116,3 +116,14 @@
 
 }
 
+.userPhoto{
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+}
+
+.userPhoto:hover{
+  /* box-shadow: 1px 2px 2px 1px rgba(255, 255, 255, 0.273) !important; */
+  filter: brightness(1.1)
+}
+

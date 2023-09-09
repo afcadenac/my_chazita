@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux"
-import { onCloseModal, onDeleteProduct, onLoadProducts, onNewProduct, onUpdateProduct } from "../store";
+import { onCloseModal, onCloseModalPhoto, onDeleteProduct, onLoadProducts, onNewProduct, onUpdateProduct } from "../store";
 import chazaApi from "../api/ChazaApi";
 import { useUserStore } from "./useUserStore";
 import { useAuthStore } from "./useAuthStore";
@@ -55,7 +55,7 @@ export const useProductStore = () => {
             const {data}=await chazaApi.post("/image",photo);
 
             await startUpdateProduct({...currentValue,photo:data.url});
-            dispatch(onCloseModal()); 
+            dispatch(onCloseModalPhoto()); 
         } catch (error) {
             console.log(error);
         }

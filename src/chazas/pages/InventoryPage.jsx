@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom"
 import { ChazaFilter, ChazaInfo, ProductList } from "../components"
 import { useAuthStore, useChazaStore, useProductStore, useUiStore } from "../../hook";
 import { useEffect } from "react";
+import { LoadingPage } from "./LoadingPage";
 
 
 export const InventoryPage = () => {
@@ -37,6 +38,9 @@ export const InventoryPage = () => {
     startFilterProduct(filter,currentChaza._id);
   }
   
+  if(!currentChaza._id){
+    return <LoadingPage/>
+  }
   return (
     <div className='container text-center' >
         <div className="row-2 mt-4 mb-4">

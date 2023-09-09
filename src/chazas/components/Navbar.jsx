@@ -2,6 +2,7 @@ import { Link, NavLink, useNavigate } from "react-router-dom"
 import { useAuthStore } from "../../hook";
 
 import "../../styles.css";
+import { Dropdown } from "../components/Dropdown";
 
 export const Navbar = () => {
 
@@ -56,17 +57,14 @@ export const Navbar = () => {
       </div>
 
       <div className="navbar-collapse collapse w-100 order-3 dual-collapse2 d-flex justify-content-end">
-          <ul className="navbar-nav ml-auto">
-              
-            <span className='nav-item nav-link text-primary'>{user.name}</span>
-
-            {
-              (status==="not-authenticated")
-              ?<button className='btn btnav text-white me-4' onClick={onLogin}>Ingresar</button>
-              :<button className='btn btnav text-white me-4' onClick={onLogout}>Salir</button>
-            }
-
-          </ul>
+        <ul className="navbar-nav ml-auto">
+          {
+            (status==="not-authenticated")
+            ?<button className='btn btnav text-white me-4' onClick={onLogin}>Ingresar</button>
+            :<Dropdown/>
+          }
+          
+        </ul>
       </div>
 
     </nav>

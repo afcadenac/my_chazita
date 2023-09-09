@@ -2,17 +2,19 @@ import { useEffect } from "react";
 import { useUserStore } from "../../hook"
 import { ChazaFilter, UsersTable } from "../components"
 
+
 export const UsersPage = () => {
-  const {startLoadUser,startFilterUser}=useUserStore(); 
+  const {startLoadUser,startFilterUser,users}=useUserStore(); 
 
   useEffect(() => {
     startLoadUser();
   }, []);
 
+
   const onFilter=(filter)=>{
     startFilterUser(filter);
   }
-  
+
   return (
     <>
       <div className='container text-center' >
