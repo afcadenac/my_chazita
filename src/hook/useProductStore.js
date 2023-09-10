@@ -20,7 +20,7 @@ export const useProductStore = () => {
         try {
             const {data}=await chazaApi.delete(`/product/${product._id}`,{chaza:product.chaza});
 
-            console.log(data);
+            await chazaApi.post("/image/delete",{path:data.productDeleted.photo});
 
             dispatch(onDeleteProduct(product));
         } catch (error) {

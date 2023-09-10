@@ -23,7 +23,10 @@ export const ChazaFilter = memo(({filter={},config={},cb=()=>{}}) => {
             convertToVector(formState).map((selector)=>{
               if(selector.name==="name") return "";
               return (
-              <ValueSelect key={selector.name} selector={selector} options={config[selector.name]} cb={onInputChange}></ValueSelect>
+                <div key={selector.name}  className="mx-2 p-0 col">
+                  <ValueSelect selector={selector} options={config[selector.name]} cb={onInputChange}></ValueSelect>
+                </div>
+              
               )
             })
           }

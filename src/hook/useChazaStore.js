@@ -3,6 +3,7 @@ import { onChangeCurrentChaza, onCloseModal, onDeleteChaza, onLoadChazas, onNewC
 import chazaApi from "../api/ChazaApi";
 import { useUserStore } from "./useUserStore";
 import { getFilteredChazas } from "../helpers";
+import { useProductStore } from "./useProductStore";
 
 
 export const useChazaStore = () => {
@@ -11,18 +12,23 @@ export const useChazaStore = () => {
     const dispatch=useDispatch();
 
     const {startUpdateUser,users}=useUserStore();
+    const {startDeleteProduct}=useProductStore();
 
     const startDeleteChaza=async(id)=>{
         try {
-            const {data}=await chazaApi.delete(`/chaza/${id}`);
-
-            console.log(data.chazaDeleted._id);
-            
+            const resp=await chazaApi.delete(`/chaza/${id}`);       
             users.forEach(user => {
                 if(user.chaza===id){
                     startUpdateUser({...user,chaza:null});
                 }
             });
+
+            const {data}=await chazaApi.post("/product/getProducts",{chaza:id});
+            data.product.forEach((product)=>{
+                startDeleteProduct(product);
+            });
+
+            await chazaApi.post("/image/delete",{path:resp.data.chazaDeleted.photo});
 
             dispatch(onDeleteChaza(id));
         } catch (error) {

@@ -44,6 +44,7 @@ export const ChazaModal = () => {
         onRequestClose={closeModal}
         style={customStyles}
         closeTimeoutMS={50}
+        className="modal"
     >
 
         <h1>Modal</h1>
@@ -54,7 +55,7 @@ export const ChazaModal = () => {
             </div>
 
             {(!currentValue._id)
-            ?(<div className="form-group mb-4">
+            ?(<div className="row mb-4 table-responsive">
                 <h4>Seleccione al dueño de la chaza</h4>
                 <hr />
                 <table className="table table-dark table-hover">
