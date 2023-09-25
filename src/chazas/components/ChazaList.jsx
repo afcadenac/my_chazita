@@ -1,5 +1,6 @@
 import { useChazaStore } from "../../hook";
 import { ChazaCard } from "./ChazaCard";
+import "../../styles.css";
 
 
 

@@ -46,7 +46,7 @@ export const ChazaModal = () => {
         closeTimeoutMS={50}
     >
 
-        <h1>Modal</h1>
+        <h1>Nueva Chaza</h1>
         <hr />
         <form onSubmit={onSubmitChaza} className="container">
             <div className="form-group mb-5">

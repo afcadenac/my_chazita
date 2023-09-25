@@ -1,6 +1,6 @@
 import { getEnvVariables } from "../../helpers";
 import { useAuthStore, useUiStore, useUserStore } from "../../hook"
-import placeholderImage from "../../assets/images/imageDefault.jpg";
+import placeholderImage from "../../assets/images/userDefault.png";
 
 export const Dropdown = () => {
     const {startLogout,user}=useAuthStore();

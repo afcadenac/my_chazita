@@ -34,7 +34,7 @@ export const useChazaStore = () => {
         try {
             const {data}=await chazaApi.post("/chaza",{name,date:new Date(),location:"Por definir",photo:"Por definir",punctuation:-1});
             await startUpdateUser({...user,chaza:data.cid});
-            dispatch(onNewChaza({_id:data.cid, name:data.name, location:data.location, photo:data.photo, punctuation:data.punctuation, date:data.date}));
+            dispatch(onNewChaza({_id:data.cid, name:data.name, photo:data.photo, punctuation:data.punctuation, date:data.date, lat:data.lat, lon:data.lon}));
             
         } catch (error) {
             console.log(error);

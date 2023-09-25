@@ -5,7 +5,7 @@ export const ChazaResult = () => {
   const {user}=useAuthStore();
   const {isModalOpen,openModal}=useUiStore();
   return (
-    <div className='row'>
+    <div className='row '>
       <ChazaList/>
       {
         (user.type==="Administrador")

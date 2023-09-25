@@ -1,9 +1,12 @@
 import { useNavigate } from "react-router-dom";
-import chazita from "../../assets/images/choza.jpg";
 import { useAuthStore, useChazaStore } from "../../hook";
 import "../../styles.css";
 import { getEnvVariables } from "../../helpers";
 import placeholderImage from "../../assets/images/imageDefault.jpg";
+import { RatingChazas } from "./RatingChazas";
+import { MapaChazas } from "./MapaChazas";
+
+import  "../../styles.css"
 
 export const ChazaCard = ({ chaza = {} }) => {
   const { user } = useAuthStore();
@@ -24,13 +27,13 @@ export const ChazaCard = ({ chaza = {} }) => {
 
   return (
     <div
-      className="row  m-2 p-2 border border-black espace-pointer"
+      className="row  mt-2 mb-2 pt-2 pb-2 border border-black espace-pointer chazaCard"
       onClick={() => {
         startLoadCurrentChaza(chaza);
       }}
       onDoubleClick={() => onNavigateChaza(chaza._id)}
     >
-      <div className="col-sm-2">
+      <div className="col-sm-2 divIMG">
         <img
           src={
             
@@ -46,25 +49,26 @@ export const ChazaCard = ({ chaza = {} }) => {
         />
       </div>
 
-      <div className={`row col-sm-${user.type === "Administrador" ? 9 : 10}`}>
-        <div className="bg-primary col m-2 d-flex justify-content-center align-items-center">
-          <label>Nombre: {chaza.name}</label>
+      <div className={`row col-sm-${user.type === "Administrador" ? 9 : 10} ` }>
+        <div className="col mt-2 mb-2 ms-2 d-flex justify-content-center align-items-center divCha">
+          <h6 className="texts">Nombre: {chaza.name}</h6>
         </div>
-        <div className="bg-primary col m-2 d-flex justify-content-center align-items-center">
-          <label>Puntuacion: {chaza.punctuation}</label>
+        <div className="col mt-2 mb-2 ms-2 d-flex justify-content-center align-items-center divCha">      
+          <RatingChazas score={chaza.punctuation} />
         </div>
-        <div className="bg-primary col m-2 d-flex justify-content-center align-items-center">
-          <label>
+        <div className="col mt-2 mb-2 ms-2 d-flex justify-content-center align-items-center divCha">
+          <h6>
             Fecha de creacion: {new Date(chaza.date).getDate() + 1}-
             {new Date(chaza.date).getMonth() + 1}-
             {new Date(chaza.date).getFullYear()}{" "}
             {new Date(chaza.date).getHours() + 1}:
             {new Date(chaza.date).getMinutes() + 1}:
             {new Date(chaza.date).getSeconds()}
-          </label>
+          </h6>
         </div>
-        <div className="bg-primary col m-2 d-flex justify-content-center align-items-center">
-          <label>ubicacion: {chaza.location}</label>
+        <div className="  mt-2 mb-2 pe-0 d-flex justify-content-center align-items-center mapachaza"> 
+          <MapaChazas lat={chaza.lat} lon={chaza.lon} nameChaza={chaza.name}/>
+          
         </div>
       </div>
       {user.type === "Administrador" ? (
@@ -73,7 +77,7 @@ export const ChazaCard = ({ chaza = {} }) => {
             className="btn btn-danger"
             onClick={() => deleteChaza(chaza._id)}
           >
-            eliminar
+            Eliminar
           </button>
         </div>
       ) : (

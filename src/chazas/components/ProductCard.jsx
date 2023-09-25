@@ -44,7 +44,7 @@ export const ProductCard = ({ list = {} }) => {
 
   return (
     <div
-      className="card cardshadow cardstyle p-0 border-dark animate__animated animate__fadeInUp"
+      className="card cardshadow cardstyle p-0 border-dark animate__animated animate__fadeInUp "
       onClick={() => ChangeValue(list)}
       onDoubleClick={openModal}
     >
@@ -65,14 +65,14 @@ export const ProductCard = ({ list = {} }) => {
 
         <div className="col-md-8 ">
           <div className="card-body ">
-            <h5 className="card-title ">{list.name}</h5>
+            <h5 className="card-title texts">{list.name}</h5>
             <div className="row mt-2 mb-2">
-              <label className="col">Precio: {list.price}</label>
-              <label className="col">Stock: {list.stock}</label>
-              <label className="col">Tipo: {list.type}</label>
+              <span className="col">Precio: {list.price}</span>
+              <span className="col">Stock: {list.stock}</span>
+              <span className="col texts">Tipo: {list.type}</span>
             </div>
             <p className="card-text ">
-              <small className="text-muted">
+              <small className="text-muted texts">
                 Descripcion: {list.description}
               </small>
             </p>

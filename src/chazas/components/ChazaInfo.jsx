@@ -8,6 +8,7 @@ import {
 import placeholderImage from "../../assets/images/imageDefault.jpg";
 
 import "../../styles.css";
+import { RatingChazas } from "./RatingChazas";
 
 export const ChazaInfo = () => {
   const { currentChaza } = useChazaStore();
@@ -36,18 +37,17 @@ export const ChazaInfo = () => {
         <h5 className="card-title d-flex justify-content-center">
           Nombre: {currentChaza.name}
         </h5>
-        <p className="card-text d-flex justify-content-center gap-5">
-          <label className="mb-1">Ubicacion: {currentChaza.location}</label>
-          <label className="mb-1">creacion: {currentChaza.date}</label>
-          <label className="mb-2">puntuacion: {currentChaza.punctuation}</label>
-        </p>
+        <div className="card-text d-flex justify-content-center gap-5 mb-4">
+          <span className="mb-1">Creación: {currentChaza.date}</span>
+          <RatingChazas score={currentChaza.punctuation} />  
+        </div>
 
-        <p className="card-text d-flex justify-content-center gap-5">
-          <label className="mb-1">
+        <p className="card-text d-flex justify-content-center gap-5 mb-5">
+          <span className="mb-1">
             Propietarios: andres felipe cadena cadena
-          </label>
-          <label className="mb-1">Telefonos: 3224040389, 34745874559</label>
-          <label className="mb-1">Redes sociales: oscar, juancho</label>
+          </span>
+          <span className="mb-1">Telefonos: 3224040389, 34745874559</span>
+          <span className="mb-1">Redes sociales: oscar, juancho</span>
         </p>
         <button className="btn btn-info ">Ver comentarios</button>
         {user.chaza === currentChaza._id && (

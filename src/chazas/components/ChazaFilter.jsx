@@ -13,9 +13,9 @@ export const ChazaFilter = memo(({filter={},config={},cb=()=>{}}) => {
   }
   
   return (
-    <div className='row  border border-dark bgfilter m-4'>
+    <div className='row  border border-dark bgfilter mt-4 mb-4 ms-1 me-1'>
         <div className="col-md-4 p-2">
-            <input type="text" className="form-control" placeholder="Nombre" onChange={onInputChange} name='name' value={formState.name}/>
+            <input type="text" className="form-control" placeholder="Nombre del producto" onChange={onInputChange} name='name' value={formState.name}/>
         </div>
         <div className="col-md-7 p-2 row d-flex justify-content-center align-items-center">
 

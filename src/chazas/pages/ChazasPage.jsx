@@ -34,8 +34,8 @@ export const ChazasPage = () => {
 
   return (
     <>
-      <div className='container text-center' >
-        <div className="container text-center bgeneral animate__animated animate__fadeInUp">
+      <div className='container text-center filtro' >
+        <div className="container text-center bgeneral animate__animated animate__fadeInUp chazacont">
 
           <ChazaFilter 
           filter={{

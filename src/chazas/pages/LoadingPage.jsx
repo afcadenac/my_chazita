@@ -1,7 +1,10 @@
-
+import nea from "../../assets/images/nea.png"
+import "../../styles.css";
 
 export const LoadingPage = () => {
   return (
-    <h1 className="bgfilter">Cargando...</h1>
+    <div className="d-flex justify-content-center align-items-center nea">
+      <img src={nea} className="nea2"/>
+    </div>
   )
 }
