@@ -7,7 +7,10 @@
 
 .espace-pointer{
     cursor: pointer;
+<<<<<<< HEAD
     
+=======
+>>>>>>> cefd450dfd6ea91d29e568a872d7635aac938263
 }
 
 .cardshadow:hover {
@@ -140,6 +143,7 @@
   border-radius: 100%;
 }
 
+<<<<<<< HEAD
 .userPhoto:hover{
   /* box-shadow: 1px 2px 2px 1px rgba(255, 255, 255, 0.273) !important; */
   filter: brightness(1.1)
@@ -188,3 +192,29 @@
 .leaflet-container.leaflet-touch-drag.leaflet-touch-zoom {
   border-radius: 10px;
 }
+=======
+.changePhoto{
+  width: 300px;
+  height: 300px;
+  border-radius: 100%;
+}
+
+.userPhoto:hover{
+  /* box-shadow: 1px 2px 2px 1px rgba(255, 255, 255, 0.273) !important; */
+  filter: brightness(1.1);
+}
+
+
+.modal {
+  background: white;
+  border-radius: 5px;
+  color: rgb(51, 51, 51);
+  display: inline;
+  max-height: 400px;
+  max-width: 500px;
+  outline: none;
+  padding: 10px;
+}
+
+
+>>>>>>> cefd450dfd6ea91d29e568a872d7635aac938263

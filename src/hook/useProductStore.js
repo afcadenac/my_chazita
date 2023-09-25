@@ -20,7 +20,7 @@ export const useProductStore = () => {
         try {
             const {data}=await chazaApi.delete(`/product/${product._id}`,{chaza:product.chaza});
 
-            console.log(data);
+            await chazaApi.post("/image/delete",{path:data.productDeleted.photo});
 
             dispatch(onDeleteProduct(product));
         } catch (error) {
@@ -30,8 +30,8 @@ export const useProductStore = () => {
 
     const startNewProduct=async(product)=>{
         try {
-            const {data}=await chazaApi.post("/product",{...product,chaza:user.chaza});
-            dispatch(onNewProduct({...product,_id:data.pid}));
+            const {data}=await chazaApi.post("/product",{...product,chaza:user.chaza,photo:"Por definir"});
+            dispatch(onNewProduct({...product,_id:data.pid,chaza:user.chaza,photo:"Por definir"}));
             dispatch(onCloseModal());
             
         } catch (error) {

@@ -67,7 +67,9 @@ export const useUserStore = () => {
     const startDeleteUser=async(id)=>{
         try {
             const {data}=await chazaApi.delete(`/user/${id}`);
-            console.log(data);
+            
+            await chazaApi.post("/image/delete",{path:data.userDeleted.photo});
+
             dispatch(onDeleteUser(data.userDeleted._id));
         } catch (error) {
             console.log(error);

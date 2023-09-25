@@ -36,6 +36,7 @@ export const ModalForm = ({make}) => {
         onRequestClose={closeModal}
         style={customStyles}
         //closeTimeoutMS={200}
+        className="modal"
     >
 
         <h1>Modal</h1>
