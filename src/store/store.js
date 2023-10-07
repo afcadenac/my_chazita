@@ -1,5 +1,5 @@
 import {configureStore} from '@reduxjs/toolkit'
-import { authSlice, chazaSlice, productSlice, uiSlice, userSlice } from './';
+import { authSlice, chazaSlice, productSlice, uiSlice, userSlice,commentSlice} from './';
 
 export const store=configureStore({
     reducer:{
@@ -7,6 +7,7 @@ export const store=configureStore({
         ui:uiSlice.reducer,
         user:userSlice.reducer,
         chaza:chazaSlice.reducer,
-        product:productSlice.reducer
+        product:productSlice.reducer,
+        comment: commentSlice.reducer
     }
 });

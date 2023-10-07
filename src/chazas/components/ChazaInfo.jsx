@@ -2,6 +2,7 @@ import { getEnvVariables } from "../../helpers";
 import {
   useAuthStore,
   useChazaStore,
+  useCommentStore,
   useProductStore,
   useUiStore,
 } from "../../hook";
@@ -14,12 +15,17 @@ export const ChazaInfo = () => {
   const { currentChaza } = useChazaStore();
   const { user } = useAuthStore();
   const { openModalPhoto, ChangeTypePhoto } = useUiStore();
+  const {startLoadComments}=useCommentStore();
 
   const onOpenModalPhoto = () => {
     ChangeTypePhoto("chaza");
     openModalPhoto();
   };
 
+  const onOpenModalComment=()=>{
+    startLoadComments();
+  }
+  
   return (
     <div className="card bg-dark text-white">
       <img
@@ -49,10 +55,10 @@ export const ChazaInfo = () => {
           <span className="mb-1">Telefonos: 3224040389, 34745874559</span>
           <span className="mb-1">Redes sociales: oscar, juancho</span>
         </p>
-        <button className="btn btn-info ">Ver comentarios</button>
+        <button className="btn btn-info " onClick={onOpenModalComment}>Ver comentarios</button>
         {user.chaza === currentChaza._id && (
           <button className="btn btn-primary mx-2" onClick={onOpenModalPhoto}>
-            cambiar
+            cambiar foto
           </button>
         )}
       </div>

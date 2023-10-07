@@ -7,10 +7,6 @@
 
 .espace-pointer{
     cursor: pointer;
-<<<<<<< HEAD
-    
-=======
->>>>>>> cefd450dfd6ea91d29e568a872d7635aac938263
 }
 
 .cardshadow:hover {
@@ -143,7 +139,6 @@
   border-radius: 100%;
 }
 
-<<<<<<< HEAD
 .userPhoto:hover{
   /* box-shadow: 1px 2px 2px 1px rgba(255, 255, 255, 0.273) !important; */
   filter: brightness(1.1)
@@ -161,9 +156,7 @@
   padding-left: 0;
   padding-right: 0;
 }
-.chazacont{
- 
-}
+
 
 .nea2{
   border-radius: 100px !important;
@@ -192,7 +185,6 @@
 .leaflet-container.leaflet-touch-drag.leaflet-touch-zoom {
   border-radius: 10px;
 }
-=======
 .changePhoto{
   width: 300px;
   height: 300px;
@@ -217,4 +209,3 @@
 }
 
 
->>>>>>> cefd450dfd6ea91d29e568a872d7635aac938263

@@ -23,3 +23,8 @@ export * from "./ChazaInfo";
 export * from "./ProductList";
 
 export * from "./ModalPhoto";
+
+export * from "./CommentCard";
+
+export * from "./ModalComment";
+

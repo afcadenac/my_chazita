@@ -3,7 +3,7 @@ import { LoginPage, RegisterPage } from "../auth";
 import { AnnouncementPage, ChazasPage, HomePage, InventoryPage, LoadingPage, Navbar, UsersPage } from "../chazas";
 import { useAuthStore, useChazaStore, useProductStore, useUiStore, useUserStore } from "../hook";
 import { useEffect } from "react";
-import { ModalPhoto } from "../chazas/components";
+import { ModalComment, ModalPhoto } from "../chazas/components";
 
 
 
@@ -76,6 +76,7 @@ export const AppRouter = () => {
       </Routes>
 
       <ModalPhoto make={onPhotoChange}/>
+      <ModalComment/>
     </>
    
   )
