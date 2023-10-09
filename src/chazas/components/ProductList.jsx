@@ -7,6 +7,7 @@ import {
 import { ModalForm, ProductCard } from "./";
 
 import "../../styles.css";
+import Swal from "sweetalert2";
 
 
 export const ProductList = () => {
@@ -33,6 +34,11 @@ export const ProductList = () => {
   };
 
   const onSubmitProduct = (product) => {
+
+    if(product.chaza!==user.chaza){
+      return Swal.fire("Error","no tiene permisos","error")
+    }
+
     if (product._id) {
       startUpdateProduct(product);
       return;
@@ -54,8 +60,8 @@ export const ProductList = () => {
       ) : (
         ""
       )}
-
-      <ModalForm make={onSubmitProduct} />
+      {(user.type==="Dueño" && currentChaza._id===user.chaza) && <ModalForm make={onSubmitProduct} />}
+      
     </div>
   );
 };

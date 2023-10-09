@@ -10,7 +10,7 @@ import  "../../styles.css"
 
 export const ChazaCard = ({ chaza = {} }) => {
   const { user } = useAuthStore();
-  const { startDeleteChaza, startLoadCurrentChaza } = useChazaStore();
+  const { startDeleteChaza, startLoadCurrentChaza,startLoadingChazasId } = useChazaStore();
   const navigate = useNavigate();
 
   const deleteChaza = (id) => {
@@ -29,9 +29,9 @@ export const ChazaCard = ({ chaza = {} }) => {
     <div
       className="row  mt-2 mb-2 pt-2 pb-2 border border-black espace-pointer chazaCard"
       onClick={() => {
-        startLoadCurrentChaza(chaza);
+        startLoadingChazasId(chaza._id);
       }}
-      onDoubleClick={() => onNavigateChaza(chaza._id)}
+      onDoubleClick={() => {onNavigateChaza(chaza._id)}}
     >
       <div className="col-sm-2 divIMG">
         <img

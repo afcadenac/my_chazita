@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux"
-import { onChangeCurrentChaza, onCloseModal, onDeleteChaza, onLoadChazas, onNewChaza, onUpdateChaza } from "../store";
+import { onChangeCurrentChaza, onChangeCurrentOwner, onChecking, onCloseModal, onCloseModalNetwork, onCloseModalPhone, onDeleteChaza, onDeleteNetwork, onDeletePhone, onLoadChazas, onLoadCurrentNetwork, onLoadCurrentPhones, onLoadProducts, onNewChaza, onNewNetwork, onNewPhone, onOpenModalNetwork, onOpenModalPhone, onUpdateChaza, onfinished } from "../store";
 import chazaApi from "../api/ChazaApi";
 import { useUserStore } from "./useUserStore";
 import { getFilteredChazas } from "../helpers";
@@ -8,11 +8,12 @@ import { useProductStore } from "./useProductStore";
 
 export const useChazaStore = () => {
 
-    const {chazas,currentChaza}=useSelector((state)=>state.chaza);
+    const {chazas,currentChaza,currentPhones,isModalPhones,currentNetworks,isModalNetwork,currentOwner}=useSelector((state)=>state.chaza);
     const dispatch=useDispatch();
 
     const {startUpdateUser,users}=useUserStore();
-    const {startDeleteProduct}=useProductStore();
+    const {startDeleteProduct,startLoadingProducts}=useProductStore();
+    
 
     const startDeleteChaza=async(id)=>{
         try {
@@ -82,8 +83,20 @@ export const useChazaStore = () => {
 
     const startLoadingChazasId=async(id)=>{
         try {
+            //dispatch(onChecking());
             const {data}=await chazaApi.get("/chaza/"+id);
+            const {data:data2}=await chazaApi.get("/chaza/phone/"+data.chaza._id);
+            const {data:data3}=await chazaApi.get("/chaza/network/"+data.chaza._id);
+            const {data:data4}=await chazaApi.get("/user/owner/"+data.chaza._id);
+
+            startLoadingProducts(data.chaza._id);
+            
             dispatch(onChangeCurrentChaza(data.chaza));
+            dispatch(onLoadCurrentPhones(data2.phone));
+            dispatch(onLoadCurrentNetwork(data3.network));
+            dispatch(onChangeCurrentOwner({owner: data4.user.name}));
+
+            //dispatch(onfinished());
         } catch (error) {
             console.log(error);
         }
@@ -106,9 +119,81 @@ export const useChazaStore = () => {
         }
     }
 
+    const startClosePhone=()=>{
+        dispatch(onCloseModalPhone());
+    }
+
+    const startOpenPhone=()=>{
+        dispatch(onOpenModalPhone());
+    }
+
+    const startNewPhone=async(chazaId,phone)=>{
+        try {
+            const {data}=await chazaApi.post("/chaza/phone",{chaza:chazaId,value:phone});
+            dispatch(onNewPhone({_id:data._id,chaza:data.chaza,value:data.value}));
+            
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const startDeletePhone=async(id)=>{
+        try {
+            const {data}=await chazaApi.delete("/chaza/phone/"+id);
+            dispatch(onDeletePhone(id));
+            
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const startCloseNetwork=()=>{
+        dispatch(onCloseModalNetwork());
+    }
+
+    const startOpenNetwork=()=>{
+        dispatch(onOpenModalNetwork());
+    }
+
+    const startNewNetwork=async(chazaId,network,link)=>{
+        try {
+            const {data}=await chazaApi.post("/chaza/network",{chaza:chazaId,value:network,link:link});
+            dispatch(onNewNetwork({_id:data._id,chaza:data.chaza,value:data.value,link:data.link}));
+            
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const startDeleteNetwork=async(id)=>{
+        try {
+            const {data}=await chazaApi.delete("/chaza/network/"+id);
+            dispatch(onDeleteNetwork(id));
+            
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+
+
+    const startResetState=async(id)=>{
+        dispatch(onChangeCurrentChaza({}));
+        dispatch(onLoadCurrentPhones([]));
+        dispatch(onLoadCurrentNetwork([]));
+        dispatch(onChangeCurrentOwner({}));
+
+        dispatch(onLoadProducts([]));
+    }
+
     return {
         chazas,
         currentChaza,
+        currentPhones,
+        isModalPhones,
+        currentNetworks,
+        isModalNetwork,
+        currentOwner,
 
         startDeleteChaza,
         startNewChaza,
@@ -117,6 +202,15 @@ export const useChazaStore = () => {
         startLoadingChazasId,
         startFilterChaza,
         startUpdateChaza,
-        startUpdateChazaPhoto
+        startUpdateChazaPhoto,
+        startClosePhone,
+        startOpenPhone,
+        startNewPhone,
+        startDeletePhone,
+        startOpenNetwork,
+        startCloseNetwork,
+        startDeleteNetwork,
+        startNewNetwork,
+        startResetState
     }
 }

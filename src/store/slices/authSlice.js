@@ -20,9 +20,17 @@ export const authSlice = createSlice({
         },
         onChecking:(state)=>{
             state.status="checking"
+        },
+        onfinished:(state)=>{
+            if(!state.user.uid){
+                state.status="not-authenticated"
+            }else{
+                state.status="authenticated";
+            }
+            
         }
     },
 })
 
 // Action creators are generated for each case reducer function
-export const { onLogout,onLogin,onChecking } = authSlice.actions
+export const { onLogout,onLogin,onChecking,onfinished } = authSlice.actions

@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom"
+import { useLocation, useParams } from "react-router-dom"
 import { ChazaFilter, ChazaInfo, ProductList } from "../components"
 import { useAuthStore, useChazaStore, useProductStore, useUiStore } from "../../hook";
 import { useEffect } from "react";
@@ -7,9 +7,11 @@ import { LoadingPage } from "./LoadingPage";
 
 export const InventoryPage = () => {
   const {id}=useParams();
-  const {startLoadingChazasId,currentChaza,startLoadCurrentChaza}=useChazaStore();
+  const {startLoadingChazasId,currentChaza,startLoadCurrentChaza,startResetState}=useChazaStore();
   const {user}=useAuthStore();
   const {products,startLoadingProducts,startCloseProduct,startFilterProduct}=useProductStore();
+
+  const location = useLocation();
 
   if((user.chaza===undefined || user.chaza===null) && id===undefined){
     return (
@@ -18,20 +20,18 @@ export const InventoryPage = () => {
   }
 
   useEffect(() => {
-    if(id===undefined && user.chaza && currentChaza._id!==user.chaza){
+    startResetState();
+  }, [location.pathname]);
+  
+
+  useEffect(() => {
+    if(id===undefined && user.chaza /*&& currentChaza._id!==user.chaza*/){
       startLoadingChazasId(user.chaza);
     }
     if(id && !currentChaza._id){
       startLoadingChazasId(id)
     }
   }, [id]);
-
-  useEffect(() => {
-    if(currentChaza._id){
-      startLoadingProducts(currentChaza._id);
-    }
-    
-  }, [currentChaza]);
 
   const onFilter=(filter)=>{
     //startLoadingProducts(currentChaza._id);

@@ -10,9 +10,11 @@ import placeholderImage from "../../assets/images/imageDefault.jpg";
 
 import "../../styles.css";
 import { RatingChazas } from "./RatingChazas";
+import { ModalPhone } from "./ModalPhone";
+import { ModalNetwork } from "./ModalNetwork";
 
 export const ChazaInfo = () => {
-  const { currentChaza } = useChazaStore();
+  const { currentChaza,startOpenPhone,currentPhones,startOpenNetwork,currentNetworks,currentOwner } = useChazaStore();
   const { user } = useAuthStore();
   const { openModalPhoto, ChangeTypePhoto } = useUiStore();
   const {startLoadComments}=useCommentStore();
@@ -50,10 +52,23 @@ export const ChazaInfo = () => {
 
         <p className="card-text d-flex justify-content-center gap-5 mb-5">
           <span className="mb-1">
-            Propietarios: andres felipe cadena cadena
+            Propietario: {currentOwner.owner}
           </span>
-          <span className="mb-1">Telefonos: 3224040389, 34745874559</span>
-          <span className="mb-1">Redes sociales: oscar, juancho</span>
+          <span className="mb-1">Telefonos:
+
+            {currentPhones.map((phone)=>{
+              return (<span key={phone._id} className="m-0"> {phone.value}, </span>)
+            })} 
+            {user.chaza === currentChaza._id && (<button className="btn btn-primary" onClick={startOpenPhone}>editar</button>)}
+          
+          </span>
+          
+          <span className="mb-1">Redes sociales: 
+            {currentNetworks.map((network)=>{
+              return (<a  key={network._id} className="m-0" href={network.link} target="_blank"> {network.value},</a>)
+            })} 
+            {user.chaza === currentChaza._id && (<button className="btn btn-primary" onClick={startOpenNetwork}>editar</button>)}
+          </span>
         </p>
         <button className="btn btn-info " onClick={onOpenModalComment}>Ver comentarios</button>
         {user.chaza === currentChaza._id && (
@@ -62,6 +77,8 @@ export const ChazaInfo = () => {
           </button>
         )}
       </div>
+      <ModalPhone/>
+      <ModalNetwork/>
     </div>
 
     /*{<div className="row  border border-dark bg-success mb-4 p-3">

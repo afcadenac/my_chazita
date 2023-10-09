@@ -3,6 +3,7 @@ import { useAuthStore, useChazaStore, useCommentStore } from '../../hook'
 import Modal from "react-modal"
 import { CommentCard } from './CommentCard';
 import { getEnvVariables } from '../../helpers';
+import placeholderImage from "../../assets/images/userDefault.png";
 
 const customStyles = {
     content: {
@@ -55,7 +56,13 @@ export const ModalComment = () => {
 
         <form onSubmit={onFormSubmit} >
             <div className="container border border-black d-flex justify-content-center my-3 p-2">
-                <img src={getEnvVariables().VITE_PHOTO_URL +user.photo} alt={user.name} className=" userPhoto" />
+                <img src={
+                    (user.photo === "Por definir" ||
+                    user.photo === undefined ||
+                    user.photo === null)
+                    ?placeholderImage
+                    :getEnvVariables().VITE_PHOTO_URL + user.photo} alt={user.name} className=" userPhoto" 
+                />
                 <div className='container'>
                     <h4>{user.name}</h4>
                     <textarea cols="50" rows="5" onChange={changedValue}></textarea>

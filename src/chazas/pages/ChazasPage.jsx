@@ -53,7 +53,9 @@ export const ChazasPage = () => {
           
           <ChazaResult/>
         
-          <ChazaModal/>
+          {
+            (user.type==="Administrador") && <ChazaModal/>
+          }
         </div>
           
       </div>

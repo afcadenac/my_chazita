@@ -1,3 +1,7 @@
+export * from "./ModalPhone";
+
+export * from "./ModalNetwork";
+
 export * from "./ChazaModal";
 
 export * from "./ModalForm";
@@ -27,4 +31,7 @@ export * from "./ModalPhoto";
 export * from "./CommentCard";
 
 export * from "./ModalComment";
+
+
+
 
