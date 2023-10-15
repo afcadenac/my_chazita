@@ -1,5 +1,5 @@
 
-const getdaysdifference=(initialDate)=>{
+export const getdaysdifference=(initialDate)=>{
     const currentDate=new Date();
 
     let difference=currentDate-initialDate;

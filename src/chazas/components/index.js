@@ -2,6 +2,12 @@ export * from "./ModalPhone";
 
 export * from "./ModalNetwork";
 
+export * from "./ModalAnnouncement";
+
+export * from "./ModalLocation";
+
+export * from "./ModalPunctuation";
+
 export * from "./ChazaModal";
 
 export * from "./ModalForm";
@@ -18,6 +24,10 @@ export * from "./Dropdown";
 
 export * from "./Navbar";
 
+export * from "./AnnouncementCard";
+
+export * from "./AnnouncementList";
+
 export * from "./ChazaFilter";
 
 export * from "./ChazaResult";
@@ -29,6 +39,8 @@ export * from "./ProductList";
 export * from "./ModalPhoto";
 
 export * from "./CommentCard";
+
+export * from "./CommentSecondary";
 
 export * from "./ModalComment";
 

@@ -53,7 +53,7 @@ export const ModalPhoto = ({make}) => {
         //closeTimeoutMS={200}
     >
 
-        <h1>Modal</h1>
+        <h1>Fotos</h1>
         <hr />
         <form onSubmit={onSubmitForm} className="container text-center">
             <img src={urlState} alt="" className="changePhoto" />

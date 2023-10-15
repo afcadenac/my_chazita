@@ -39,7 +39,7 @@ export const ModalNetwork = () => {
         //closeTimeoutMS={200}
     >
 
-        <h1>Modal</h1>
+        <h1>Redes sociales</h1>
         <hr />
 
         <div className='container'>
@@ -53,8 +53,8 @@ export const ModalNetwork = () => {
             }
 
             <form onSubmit={onFormSubmit}>
-                <input type="text" name='name' value={formState.name} onChange={onInputChange} placeholder='Nombre'/>
-                <input type="text" name='link' value={formState.link} onChange={onInputChange} placeholder='link'/>
+                <input type="text" name='name' value={formState.name} onChange={onInputChange} placeholder='Nombre' className='form-control my-3'/>
+                <input type="text" name='link' value={formState.link} onChange={onInputChange} placeholder='link' className='form-control my-3'/>
                 <button className='btn btn-primary'>Guardar</button>
             </form>
         </div>

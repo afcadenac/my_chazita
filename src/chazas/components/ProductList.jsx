@@ -8,6 +8,7 @@ import { ModalForm, ProductCard } from "./";
 
 import "../../styles.css";
 import Swal from "sweetalert2";
+import { LoadingPage } from "../pages/LoadingPage";
 
 
 export const ProductList = () => {
@@ -15,6 +16,7 @@ export const ProductList = () => {
   const { currentChaza } = useChazaStore();
   const { ChangeValue, currentValue, openModal,ChangeValueSelector } = useUiStore();
   const { products, startNewProduct, startUpdateProduct, } = useProductStore();
+  const {isLoadingRequest}=useUiStore();
 
   const onNewProduct = () => {
     ChangeValue({
@@ -46,6 +48,10 @@ export const ProductList = () => {
 
     startNewProduct(product);
   };
+
+  if(isLoadingRequest){
+    return <LoadingPage/>
+  }
 
   return (
     <div className="row border-0  d-flex justify-content-between align-items-center gap-4 prodlist">

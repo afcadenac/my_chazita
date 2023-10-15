@@ -10,4 +10,6 @@ export * from "./slices/authSlice"
 
 export * from "./slices/commentSlice"
 
+export * from "./slices/announcementSlice"
+
 export * from "./store"

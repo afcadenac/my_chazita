@@ -1,10 +1,13 @@
 import { useEffect } from "react";
-import { useUserStore } from "../../hook"
+import { useUiStore, useUserStore } from "../../hook"
 import { ChazaFilter, UsersTable } from "../components"
+import { LoadingPage } from "./LoadingPage";
 
 
 export const UsersPage = () => {
   const {startLoadUser,startFilterUser,users}=useUserStore(); 
+
+  const {isLoadingRequest}=useUiStore();
 
   useEffect(() => {
     startLoadUser();
@@ -15,10 +18,14 @@ export const UsersPage = () => {
     startFilterUser(filter);
   }
 
+  if(isLoadingRequest){
+    return <LoadingPage/>
+  }
+
   return (
     <>
-      <div className='container text-center' >
-        <div className="row-2 mt-4 mb-4">
+      <div className='container text-center filtro' >
+        <div className="container text-center bgeneral animate__animated animate__fadeInUp chazacont">
 
           <ChazaFilter
           filter={{

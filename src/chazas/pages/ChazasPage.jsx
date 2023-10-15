@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { ChazaFilter, ChazaModal, ChazaResult } from "../components"
-import { useAuthStore, useChazaStore, useUserStore } from "../../hook";
+import { useAuthStore, useChazaStore, useUiStore, useUserStore } from "../../hook";
 import 'animate.css';
 import "../../styles.css"
 import { LoadingPage } from "./LoadingPage";
@@ -13,6 +13,8 @@ export const ChazasPage = () => {
   const {startLoadingChazas,startFilterChaza,chazas}=useChazaStore();
 
   const {user}=useAuthStore();
+
+  const {isLoadingRequest}=useUiStore();
 
   useEffect(() => {
     if(user.type==="Administrador"){
@@ -28,7 +30,7 @@ export const ChazasPage = () => {
     startFilterChaza(filter);
   }
 
-  if(chazas===null){
+  if(isLoadingRequest){
     return <LoadingPage/>
   }
 

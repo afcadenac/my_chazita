@@ -2,8 +2,9 @@ import React, { useState } from 'react'
 import { useAuthStore, useChazaStore, useCommentStore } from '../../hook'
 import Modal from "react-modal"
 import { CommentCard } from './CommentCard';
-import { getEnvVariables } from '../../helpers';
+import { getCommentSecondary, getEnvVariables } from '../../helpers';
 import placeholderImage from "../../assets/images/userDefault.png";
+import { CommentSecondary } from './CommentSecondary';
 
 const customStyles = {
     content: {
@@ -20,7 +21,7 @@ Modal.setAppElement("#root");
 
 export const ModalComment = () => {
     const {isModalComment, startCloseComments,comments,starNewComment}=useCommentStore();
-    const {user}=useAuthStore();
+    const {user,status}=useAuthStore();
     const {currentChaza}=useChazaStore();
     const [opinion, setOpinion] = useState("");
     const changedValue=(e)=>{
@@ -33,6 +34,11 @@ export const ModalComment = () => {
         setOpinion("");
         console.log(opinion);
     }
+
+    const onSecondaryList=(comment)=>{
+        console.log(getCommentSecondary(comment,comments));
+        console.log([].length);
+    }
   return (
     <Modal
         isOpen={isModalComment}
@@ -42,34 +48,40 @@ export const ModalComment = () => {
         //closeTimeoutMS={200}
     >
 
-        <h1>Modal</h1>
+        <h1>Comentarios</h1>
         <hr />
         {
             comments.map((comment)=>{
                 if(comment.idComment===undefined || comment.idComment===null){
-                    return (<CommentCard key={comment._id}  comment={comment}/>)
+                    return (<div key={comment._id}>
+                        <CommentCard key={comment._id}  comment={comment}/>
+                        {(!comment.idComment) && <CommentSecondary CommentsSecondary={getCommentSecondary(comment,comments)} firstComment={comment}/> }
+                    </div>)
                 }
                 return;
             })
 
         }
 
-        <form onSubmit={onFormSubmit} >
-            <div className="container border border-black d-flex justify-content-center my-3 p-2">
-                <img src={
-                    (user.photo === "Por definir" ||
-                    user.photo === undefined ||
-                    user.photo === null)
-                    ?placeholderImage
-                    :getEnvVariables().VITE_PHOTO_URL + user.photo} alt={user.name} className=" userPhoto" 
-                />
-                <div className='container'>
-                    <h4>{user.name}</h4>
-                    <textarea cols="50" rows="5" onChange={changedValue}></textarea>
-                    <button className='btn btn-primary'>Agregar comentario</button>
+        {(status==="authenticated") && (
+            <form onSubmit={onFormSubmit} >
+                <div className="container border border-black d-flex justify-content-center my-3 p-2">
+                    <img src={
+                        (user.photo === "Por definir" ||
+                        user.photo === undefined ||
+                        user.photo === null)
+                        ?placeholderImage
+                        :getEnvVariables().VITE_PHOTO_URL + user.photo} alt={user.name} className=" userPhoto" 
+                    />
+                    <div className='container'>
+                        <h4>{user.name}</h4>
+                        <textarea cols="50" rows="5" onChange={changedValue} value={opinion}/>
+                        <button className='btn btn-primary'>Agregar comentario</button>
+                    </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        )}
+        
         
     </Modal>
   )

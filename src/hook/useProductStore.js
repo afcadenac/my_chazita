@@ -14,7 +14,7 @@ export const useProductStore = () => {
 
     const {startUpdateUser,users}=useUserStore();
     const {user}=useAuthStore();
-    const {currentValue}=useUiStore();
+    const {currentValue,ChangeIsLoading}=useUiStore();
 
     const startDeleteProduct=async(product)=>{
         try {

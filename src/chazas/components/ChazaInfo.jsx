@@ -12,10 +12,12 @@ import "../../styles.css";
 import { RatingChazas } from "./RatingChazas";
 import { ModalPhone } from "./ModalPhone";
 import { ModalNetwork } from "./ModalNetwork";
+import { ModalLocation } from "./ModalLocation";
+import { ModalPunctuation } from "./ModalPunctuation";
 
 export const ChazaInfo = () => {
-  const { currentChaza,startOpenPhone,currentPhones,startOpenNetwork,currentNetworks,currentOwner } = useChazaStore();
-  const { user } = useAuthStore();
+  const { currentChaza,startOpenPhone,currentPhones,startOpenNetwork,currentNetworks,currentOwner,startOpenLocation,startOpenPunctuation } = useChazaStore();
+  const { user,status } = useAuthStore();
   const { openModalPhoto, ChangeTypePhoto } = useUiStore();
   const {startLoadComments}=useCommentStore();
 
@@ -44,10 +46,12 @@ export const ChazaInfo = () => {
       <div className="card-img-overlay overlay-text d-block">
         <h5 className="card-title d-flex justify-content-center">
           Nombre: {currentChaza.name}
+          {user.chaza === currentChaza._id && (<button className="btn btn-primary" onClick={startOpenLocation}>editar nombre</button>)}
         </h5>
         <div className="card-text d-flex justify-content-center gap-5 mb-4">
           <span className="mb-1">Creación: {currentChaza.date}</span>
           <RatingChazas score={currentChaza.punctuation} />  
+          {status === "authenticated" && (<button className="btn btn-primary" onClick={startOpenPunctuation}>puntuar</button>)}
         </div>
 
         <p className="card-text d-flex justify-content-center gap-5 mb-5">
@@ -79,6 +83,8 @@ export const ChazaInfo = () => {
       </div>
       <ModalPhone/>
       <ModalNetwork/>
+      <ModalLocation/>
+      <ModalPunctuation/>
     </div>
 
     /*{<div className="row  border border-dark bg-success mb-4 p-3">

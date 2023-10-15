@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import chazaApi from "../api/ChazaApi";
 import Swal from "sweetalert2";
 import { onCloseModalComment, onDeleteComment, onLoadComment, onNewComment, onOpenModalComment } from "../store";
+import { getCommentSecondary } from "../helpers";
 
 
 
@@ -47,12 +48,31 @@ export const useCommentStore = () => {
         }
     }
 
+    const startDeleteCommentSecondary=async(comment)=>{
+        const commentsSecondary=getCommentSecondary(comment,comments);
+
+        startDeleteComment(comment._id);
+
+        for (const com of commentsSecondary) {
+            startDeleteComment(com._id);
+        }
+    }
+
     const startCloseComments=async()=>{
         try {
             dispatch(onLoadComment([]));
             dispatch(onCloseModalComment());
         } catch (error) {
             Swal.fire("error","ocurrio un error","error");
+        }
+    }
+
+    const starUpdateComment=async(comment)=>{
+        try {
+            const {data}=await chazaApi.put(`/comment/${comment._id}`,{...comment,user:user.uid});
+            //dispatch(onUpdateComment({...data.commentUpdated,user:{_id:user.uid,name:user.name,photo:user.photo}}));
+        } catch (error) {
+            Swal.fire("Error","se produjo un error","error");
         }
     }
 
@@ -63,6 +83,8 @@ export const useCommentStore = () => {
         startLoadComments,
         startCloseComments,
         starNewComment,
-        startDeleteComment
+        startDeleteComment,
+        startDeleteCommentSecondary,
+        starUpdateComment
     }
 }

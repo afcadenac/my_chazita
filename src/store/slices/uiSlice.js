@@ -6,6 +6,7 @@ export const uiSlice = createSlice({
         isModalOpen: false,
         isModalPhotoOpen: false,
         currentTypePhoto:"",
+        isLoadingRequest:false,
 
         currentValue:{},
         currentValueSelector:{}
@@ -34,9 +35,12 @@ export const uiSlice = createSlice({
         },
         onChangeTypePhoto: (state,{payload}) => {
             state.currentTypePhoto=payload;
+        },
+        onChangeIsLoading: (state,{payload}) => {
+            state.isLoadingRequest=payload;
         }
     },
 });
 
 // Action creators are generated for each case reducer function
-export const { onOpenModal,onCloseModal,onChangeValue,onChangeValueSelector,onCloseModalPhoto,onOpenModalPhoto,onChangeTypePhoto } = uiSlice.actions
+export const { onOpenModal,onCloseModal,onChangeValue,onChangeValueSelector,onCloseModalPhoto,onOpenModalPhoto,onChangeTypePhoto,onChangeIsLoading } = uiSlice.actions

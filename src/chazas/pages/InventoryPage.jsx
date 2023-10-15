@@ -7,9 +7,9 @@ import { LoadingPage } from "./LoadingPage";
 
 export const InventoryPage = () => {
   const {id}=useParams();
-  const {startLoadingChazasId,currentChaza,startLoadCurrentChaza,startResetState}=useChazaStore();
+  const {startLoadingChazasId,currentChaza,startResetState}=useChazaStore();
   const {user}=useAuthStore();
-  const {products,startLoadingProducts,startCloseProduct,startFilterProduct}=useProductStore();
+  const {startFilterProduct}=useProductStore();
 
   const location = useLocation();
 

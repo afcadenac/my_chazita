@@ -30,16 +30,6 @@ export const MapaChazas = ({ lat, lon, nameChaza }) => {
             <h2>{nameChaza}</h2>
           </Popup>
         </Marker>
-        <Marker position={[lat, lon]} icon={customIcon}>
-          <Popup>
-            <h2>{nameChaza}</h2>
-          </Popup>
-        </Marker>
-        <Marker position={[lat, lon]} icon={customIcon}>
-          <Popup>
-            <h2>{nameChaza}</h2>
-          </Popup>
-        </Marker>
       </MapContainer>
     </>
   );

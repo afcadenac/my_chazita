@@ -10,16 +10,20 @@ export const useUserStore = () => {
     const {users}=useSelector((state)=>state.user)
     const dispatch=useDispatch();
 
-    const {currentValue}=useUiStore()
+    const {currentValue,ChangeIsLoading}=useUiStore()
     const {user,startLogin}=useAuthStore();
 
     const startLoadUser=async()=>{
         try {
+            ChangeIsLoading(true);
+            
             const {data}=await chazaApi.get("/user");
             dispatch(onLoadUsers(data.users));
             
+            ChangeIsLoading(false);
         } catch (error) {
-            console.log(error)
+            console.log(error);
+            ChangeIsLoading(false);
         }
     }
 
