@@ -37,7 +37,7 @@ export const ProductList = () => {
 
   const onSubmitProduct = (product) => {
 
-    if(product.chaza!==user.chaza){
+    if(product.chaza!==user.chaza && product._id){
       return Swal.fire("Error","no tiene permisos","error")
     }
 

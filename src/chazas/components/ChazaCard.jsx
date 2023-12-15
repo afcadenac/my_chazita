@@ -1,12 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import { useAuthStore, useChazaStore } from "../../hook";
 import "../../styles.css";
-import { getEnvVariables } from "../../helpers";
+import { getDateString, getEnvVariables } from "../../helpers";
 import placeholderImage from "../../assets/images/imageDefault.jpg";
 import { RatingChazas } from "./RatingChazas";
 import { MapaChazas } from "./MapaChazas";
 
 import  "../../styles.css"
+import Swal from "sweetalert2";
 
 export const ChazaCard = ({ chaza = {} }) => {
   const { user } = useAuthStore();
@@ -14,7 +15,26 @@ export const ChazaCard = ({ chaza = {} }) => {
   const navigate = useNavigate();
 
   const deleteChaza = (id) => {
-    startDeleteChaza(id);
+    Swal.fire({
+      title: '¿Estas seguro?',
+      text: "¡No podrás revertir esto!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: '¡Sí, bórralo!',
+      cancelButtonText:"Cancelar"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        startDeleteChaza(id);
+        Swal.fire(
+          '¡Eliminado!',
+          'La chaza ha sido eliminada.',
+          'success'
+        )
+      }
+    });
+    
   };
 
   const onNavigateChaza = (id) => {
@@ -27,13 +47,13 @@ export const ChazaCard = ({ chaza = {} }) => {
 
   return (
     <div
-      className="row  mt-2 mb-2 pt-2 pb-2 border border-black espace-pointer chazaCard"
+      className="row cardshadow mb-4 py-2 border border-black espace-pointer chazaCard animate__animated "
       onClick={() => {
         startLoadCurrentChaza(chaza._id);
       }}
       onDoubleClick={() => {onNavigateChaza(chaza._id)}}
     >
-      <div className="col-sm-2 divIMG">
+      <div className="col-md-3 divIMG px-2 m-0">
         <img
           src={
             
@@ -49,28 +69,25 @@ export const ChazaCard = ({ chaza = {} }) => {
         />
       </div>
 
-      <div className={`row col-sm-${user.type === "Administrador" ? 9 : 10} ` }>
-        <div className="col mt-2 mb-2 ms-2 d-flex justify-content-center align-items-center divCha">
+      <div className={`row m-0 col-md-${user.type === "Administrador" ? 5/* -1 */ : 5} ` }>
+        <div className="col my-2 mx-1 d-flex justify-content-center align-items-center divCha">
           <h6 className="texts">Nombre: {chaza.name}</h6>
         </div>
-        <div className="col mt-2 mb-2 ms-2 d-flex justify-content-center align-items-center divCha">      
+        <div className="col my-2 mx-1 d-flex justify-content-center align-items-center divCha">      
           <RatingChazas score={chaza.punctuation} />
         </div>
-        <div className="col mt-2 mb-2 ms-2 d-flex justify-content-center align-items-center divCha">
+        <div className="col my-2 mx-1 d-flex justify-content-center align-items-center divCha">
           <h6>
-            Fecha de creacion: {new Date(chaza.date).getDate() + 1}-
-            {new Date(chaza.date).getMonth() + 1}-
-            {new Date(chaza.date).getFullYear()}{" "}
-            {new Date(chaza.date).getHours() + 1}:
-            {new Date(chaza.date).getMinutes() + 1}:
-            {new Date(chaza.date).getSeconds()}
+            Fecha de creacion: {getDateString(chaza.date)}
           </h6>
         </div>
-        <div className="  mt-2 mb-2 pe-0 d-flex justify-content-center align-items-center mapachaza"> 
+        
+      </div>
+
+      <div className="my-2 px-2 d-flex justify-content-center align-items-center col-md-4 m-0"> 
           <MapaChazas lat={chaza.lat} lon={chaza.lon} nameChaza={chaza.name}/>
           
         </div>
-      </div>
       {user.type === "Administrador" ? (
         <div className="col d-flex justify-content-center align-items-center">
           <button

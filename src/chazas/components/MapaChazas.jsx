@@ -14,7 +14,7 @@ export const MapaChazas = ({ lat, lon, nameChaza }) => {
   });
 
   return (
-    <>
+    <div className="mapita border border-black">
       <MapContainer
         style={styles}
         center={[lat, lon]}
@@ -31,6 +31,6 @@ export const MapaChazas = ({ lat, lon, nameChaza }) => {
           </Popup>
         </Marker>
       </MapContainer>
-    </>
+    </div>
   );
 };

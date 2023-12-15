@@ -1,4 +1,4 @@
-::-webkit-scrollbar {
+body::-webkit-scrollbar {
   display: none;
 }
 
@@ -44,7 +44,8 @@
   }
 
   .card-img{
-    height: 80%;
+    height: 93%;
+    border-radius: 5px;
   }
   .divCha{
     border-radius: 10px;
@@ -93,9 +94,13 @@
  
  .cardstyle{
     max-width: 540px;
-    max-height: 150px;
     min-height: 130px;
  }
+ @media (max-width: 1200px) {
+  .cardstyle {
+    max-width: 100%;
+  }
+}
 
  .cardstyle:hover{
   cursor: pointer;
@@ -182,7 +187,9 @@
 }
 
 .chazaCard{
-  height: 250px;
+  min-height: 250px;
+  background: rgb(55, 56, 58);
+  border-radius: 10px;
 }
 
 .mapachaza{
@@ -218,5 +225,38 @@
   outline: none;
   padding: 10px;
 }
+
+.mapita{
+  height: 250px;
+  width: 100%;
+  border-radius: 10px;
+}
+
+.card-border{
+  border-radius: 10px;
+}
+
+.card-photo{
+  height: 250px;
+}
+.card-photo-2{
+  height: 180px;
+}
+.card-photo-3{
+  height: 250px;
+}
+
+.scroll-product{
+  overflow-y:auto;
+}
+.scroll-product::-webkit-scrollbar {
+  background: none; /* Color del pulgar de la barra de desplazamiento */
+  width: 5px;
+}
+.scroll-product::-webkit-scrollbar-thumb {
+  background: #1e2020; /* Color del pulgar de la barra de desplazamiento */
+}
+
+
 
 

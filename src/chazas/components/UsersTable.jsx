@@ -1,5 +1,6 @@
 import { ModalForm } from "./ModalForm"
 import { useUiStore, useUserStore } from "../../hook";
+import Swal from "sweetalert2";
 
 export const UsersTable = () => {
 
@@ -16,13 +17,31 @@ export const UsersTable = () => {
     }
 
     const onDelete=(id)=>{
-        startDeleteUser(id);
+        Swal.fire({
+            title: '¿Estas seguro?',
+            text: "¡No podrás revertir esto!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '¡Sí, bórralo!',
+            cancelButtonText:"Cancelar"
+          }).then((result) => {
+            if (result.isConfirmed) {
+                startDeleteUser(id);
+              Swal.fire(
+                '¡Eliminado!',
+                'El usuario ha sido eliminado.',
+                'success'
+              )
+            }
+          });
     }
 
   return (
-    <div className="row border border-dark bg-primary p-3 table-responsive mt-3">
+    <div className="row border border-dark bgfilter p-1 table-responsive m-0">
 
-        <table className="table table-dark table-hover">
+        <table className="table table-dark table-hover m-0">
             <thead>
                 <tr>
                     <th scope="col">Id</th>

@@ -2,6 +2,7 @@ import { getEnvVariables } from "../../helpers"
 import { useAuthStore, useCommentStore } from "../../hook";
 import placeholderImage from "../../assets/images/userDefault.png";
 import { useState } from "react";
+import Swal from "sweetalert2";
 
 export const CommentCard = ({comment={}}) => {
   const {user}=useAuthStore();
@@ -15,7 +16,25 @@ export const CommentCard = ({comment={}}) => {
   }
 
   const onDeleteComment=(com)=>{
-    startDeleteCommentSecondary(com);
+    Swal.fire({
+      title: '¿Estas seguro?',
+      text: "¡No podrás revertir esto!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: '¡Sí, bórralo!',
+      cancelButtonText:"Cancelar"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        startDeleteCommentSecondary(com);
+        Swal.fire(
+          '¡Eliminado!',
+          'Su comentario ha sido eliminado.',
+          'success'
+        )
+      }
+    });
   }
 
   const onUpdateComment=(com)=>{

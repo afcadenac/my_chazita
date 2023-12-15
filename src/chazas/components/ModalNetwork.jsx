@@ -3,6 +3,7 @@ import { useAuthStore, useChazaStore, useForm } from '../../hook'
 import Modal from "react-modal"
 import { getEnvVariables } from '../../helpers';
 import placeholderImage from "../../assets/images/userDefault.png";
+import Swal from 'sweetalert2';
 
 const customStyles = {
     content: {
@@ -30,6 +31,29 @@ export const ModalNetwork = () => {
         startNewNetwork(currentChaza._id,formState.name,formState.link);
         onResetForm();
     }
+
+    const onDeleteNetwork=(deleteNetwork)=>{
+        Swal.fire({
+            title: '¿Estas seguro?',
+            text: "¡No podrás revertir esto!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '¡Sí, bórralo!',
+            cancelButtonText:"Cancelar"
+          }).then((result) => {
+            if (result.isConfirmed) {
+                startDeleteNetwork(deleteNetwork._id)
+              Swal.fire(
+                '¡Eliminado!',
+                'La red social ha sido eliminada.',
+                'success'
+              )
+            }
+          });
+    }
+
   return (
     <Modal
         isOpen={isModalNetwork}
@@ -47,7 +71,7 @@ export const ModalNetwork = () => {
                 currentNetworks?.map((network)=>{
                     return (<div key={network._id} className='row my-2'>
                         <h5 className='col-8'>{network.value}</h5>
-                        <button className='btn btn-danger col-2' onClick={()=>{startDeleteNetwork(network._id)}}>Eliminar</button>
+                        <button className='btn btn-danger col-2' onClick={()=>{onDeleteNetwork(network)}}>Eliminar</button>
                     </div>)
                 })
             }

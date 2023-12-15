@@ -52,8 +52,8 @@ export const getFilteredChazas= (filter={},chazaFilter=[]) => {
             chazaFilter=chazaFilter.filter((chaza)=>chaza.punctuation>4);
             break;
 
-        case "sobre a 5":
-            chazaFilter=chazaFilter.filter((chaza)=>chaza.type===5);
+        case "sobre 5":
+            chazaFilter=chazaFilter.filter((chaza)=>chaza.punctuation===5);
             break;
 
         default:
@@ -70,7 +70,7 @@ export const getFilteredChazas= (filter={},chazaFilter=[]) => {
             break;
         
         case "entre 6 meses a un año":
-            chazaFilter=chazaFilter.filter((chaza)=>cgetdaysdifference(new Date(chaza.date))>=182 && getdaysdifference(new Date(chaza.date))<=365);
+            chazaFilter=chazaFilter.filter((chaza)=>getdaysdifference(new Date(chaza.date))>=182 && getdaysdifference(new Date(chaza.date))<=365);
             break;
 
         case "mas de un años":

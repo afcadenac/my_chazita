@@ -1,4 +1,4 @@
-import { getEnvVariables } from "../../helpers";
+import { getDateString, getEnvVariables } from "../../helpers";
 import {
   useAuthStore,
   useChazaStore,
@@ -49,7 +49,7 @@ export const ChazaInfo = () => {
           {user.chaza === currentChaza._id && (<button className="btn btn-primary" onClick={startOpenLocation}>editar nombre</button>)}
         </h5>
         <div className="card-text d-flex justify-content-center gap-5 mb-4">
-          <span className="mb-1">Creación: {currentChaza.date}</span>
+          <span className="mb-1">Creación: {getDateString(currentChaza.date)}</span>
           <RatingChazas score={currentChaza.punctuation} />  
           {status === "authenticated" && (<button className="btn btn-primary" onClick={startOpenPunctuation}>puntuar</button>)}
         </div>

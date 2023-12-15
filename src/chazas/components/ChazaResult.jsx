@@ -5,14 +5,14 @@ export const ChazaResult = () => {
   const {user}=useAuthStore();
   const {isModalOpen,openModal}=useUiStore();
   return (
-    <div className='row '>
+    <div className='row  d-flex justify-content-between align-items-center prodlist'>
       <ChazaList/>
       {
         (user.type==="Administrador")
         ?(
-          <div className="mb-3">
-            <button className="btn btn-secondary" onClick={openModal}>Nuevo</button>
-          </div>
+          
+            <button className="btn btn-secondary mb-0" onClick={openModal}>Nuevo</button>
+          
         )
         :""
       }

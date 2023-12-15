@@ -8,6 +8,7 @@ import {
 import placeholderImage from "../../assets/images/imageDefault.jpg";
 import "../../styles.css";
 import "animate.css";
+import Swal from "sweetalert2";
 
 export const ProductCard = ({ list = {} }) => {
   const { currentChaza } = useChazaStore();
@@ -42,6 +43,28 @@ export const ProductCard = ({ list = {} }) => {
     openModalPhoto();
   };
 
+  const onDeleteProduct=(deleteProduct)=>{
+    Swal.fire({
+      title: '¿Estas seguro?',
+      text: "¡No podrás revertir esto!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: '¡Sí, bórralo!',
+      cancelButtonText:"Cancelar"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        startDeleteProduct(deleteProduct);
+        Swal.fire(
+          '¡Eliminado!',
+          'El producto ha sido eliminado.',
+          'success'
+        )
+      }
+    });
+  }
+
   return (
     <div
       className="card cardshadow cardstyle p-0 border-dark animate__animated animate__fadeInUp "
@@ -58,13 +81,13 @@ export const ProductCard = ({ list = {} }) => {
                 ? placeholderImage
                 : getEnvVariables().VITE_PHOTO_URL + list.photo
             }
-            className="img-fluid rounded-start imag"
+            className="img-fluid rounded-start imag card-photo"
             alt="..."
           />
         </div>
 
-        <div className="col-md-8 ">
-          <div className="card-body ">
+        <div className="col-md-8 card-photo">
+          <div className={(user.chaza === list.chaza )?"card-body scroll-product card-photo-2 mb-3":"card-body scroll-product card-photo-3 mb-3"}>
             <h5 className="card-title texts">{list.name}</h5>
             <div className="row mt-2 mb-2">
               <span className="col">Precio: {list.price}</span>
@@ -76,7 +99,9 @@ export const ProductCard = ({ list = {} }) => {
                 Descripcion: {list.description}
               </small>
             </p>
-            {user.chaza === list.chaza && (
+            
+          </div>
+          {user.chaza === list.chaza && (
               <>
                 <button
                   className="btn btn-primary mb-2 mx-2"
@@ -86,13 +111,12 @@ export const ProductCard = ({ list = {} }) => {
                 </button>
                 <button
                   className="btn btn-danger mb-2"
-                  onClick={() => startDeleteProduct(list)}
+                  onClick={() => onDeleteProduct(list)}
                 >
                   eliminar
                 </button>
               </>
             )}
-          </div>
         </div>
       </div>
     </div>

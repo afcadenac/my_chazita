@@ -33,7 +33,7 @@ export const Dropdown = () => {
             <li><a className="dropdown-item" href="#">{user.email}</a></li>
             <li><a className="dropdown-item" href="#" onClick={onOpenModalPhoto}>cambiar foto</a></li>
             <li><hr className="dropdown-divider"/></li>
-            <li><a className="dropdown-item" onClick={onLogout}>Cerrar sesion</a></li>
+            <li><a className="dropdown-item espace-pointer" onClick={onLogout}>Cerrar sesion</a></li>
         </ul>
     </div>
   )

@@ -3,6 +3,7 @@ import { useAuthStore, useChazaStore, useForm } from '../../hook'
 import Modal from "react-modal";
 import capuchoFill  from "../../assets/capucho.ico";
 import  capuchoOutFill  from "../../assets/capuchont.ico";
+import Swal from 'sweetalert2';
 
 
 const customStyles = {
@@ -43,8 +44,26 @@ export const ModalPunctuation = () => {
     }
 
     const onDeletePunctuationUser=()=>{
-        startDeletePunctuationUser(currentPunctuation);
-        startClosePunctuation();
+        Swal.fire({
+            title: '¿Estas seguro?',
+            text: "¡No podrás revertir esto!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '¡Sí, bórralo!',
+            cancelButtonText:"Cancelar"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    startDeletePunctuationUser(currentPunctuation);
+                    startClosePunctuation();
+                Swal.fire(
+                    '¡Eliminado!',
+                    'Su puntuacion actual ha sido eliminada.',
+                    'success'
+                )
+                }
+            });
     }
 
   return (

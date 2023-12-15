@@ -71,7 +71,6 @@ export const ModalLocation = () => {
         <button className='btn btn-primary'>Cambiar</button>
        </form>
         
-        
     </Modal>
   )
 }
